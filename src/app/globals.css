@@ -2,32 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --card: 149 60% 100%;
+    --ring: 149 54% 61%;
+    --input: 220 13% 91%;
+    --muted: 149 14% 88%;
+    --accent: 149 4% 91%;
+    --border: 220 13% 91%;
+    --popover: 149 60% 100%;
+    --primary: 149 54% 61%;
+    --secondary: 149 4% 91%;
+    --background: 149 60% 100%;
+    --foreground: 149 59% 5%;
+    --destructive: 8 99% 30%;
+    --card-foreground: 149 59% 5%;
+    --muted-foreground: 149 5% 38%;
+    --accent-foreground: 149 4% 31%;
+    --popover-foreground: 149 59% 5%;
+    --primary-foreground: 149 54% 1%;
+    --secondary-foreground: 149 4% 31%;
+    --destructive-foreground: 8 99% 90%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --card: 149 31% 1%;
+    --ring: 149 54% 61%;
+    --input: 215 27.9% 16.9%;
+    --muted: 149 14% 12%;
+    --accent: 149 6% 10%;
+    --border: 215 27.9% 16.9%;
+    --popover: 149 31% 1%;
+    --primary: 149 54% 61%;
+    --secondary: 149 6% 10%;
+    --background: 149 31% 1%;
+    --foreground: 149 18% 100%;
+    --destructive: 8 99% 45%;
+    --card-foreground: 149 18% 100%;
+    --muted-foreground: 149 5% 62%;
+    --accent-foreground: 149 6% 70%;
+    --popover-foreground: 149 18% 100%;
+    --primary-foreground: 149 54% 1%;
+    --secondary-foreground: 149 6% 70%;
+    --destructive-foreground: 0 0% 100%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
