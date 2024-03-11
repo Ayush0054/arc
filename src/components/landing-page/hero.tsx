@@ -29,7 +29,7 @@ function Hero() {
         </Card>
       </div>
       <Image
-        className="shadow-green-100 shadow-2xl rounded-2xl"
+        className="shadow-green-100 shadow-2xl hover:blur-none blur-sm rounded-2xl"
         src={heroImage}
         alt=""
       />

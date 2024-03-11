@@ -54,53 +54,62 @@ function Page() {
   };
 
   return (
-    <div className=" flex flex-col justify-center items-center mt-12">
-      <h1 className=" text-3xl font-semibold my-4">Create a new arc</h1>
-      <div className="flex flex-col w-[500px]    gap-8 p-10 ">
-        <div className=" grid gap-4">
-          <Label className="">Name</Label>
-          <Input
-            className="   focus-visible:ring-white   "
-            autoComplete="off"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="  grid  gap-4">
-          <Label className="">Description</Label>
-          <Textarea
-            className="  focus-visible:ring-white    "
-            autoComplete="off"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className="  grid  gap-4">
-          <Label className="">Type</Label>
-          <Input
-            className="  focus-visible:ring-white  "
-            autoComplete="off"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch
-            onCheckedChange={showCompletion}
-            checked={show}
-            id="airplane-mode"
-          />
-          <Label htmlFor="airplane-mode">completion Date</Label>
-        </div>
-        {show && (
-          <div className=" grid gap-4 ">
-            <DatePicker
-              completionDate={completionDate}
-              setCompletionDate={setCompletionDate}
+    <div>
+      {/* <div className=" p-3 mt-8 flex justify-start gap-2">
+        <Switch /> Preview
+      </div> */}
+      <div className=" flex flex-col justify-center items-center mt-12">
+        <h1 className=" text-3xl font-semibold my-4">Create a new arc</h1>
+        <div className="flex flex-col w-[500px]    gap-8 p-10 ">
+          <div className=" grid gap-4">
+            <Label className="">Arc Name</Label>
+            <Input
+              className="   focus-visible:ring-white   "
+              autoComplete="off"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
-        )}
-        <Button>Submit</Button>
+          <div className="  grid  gap-4">
+            <Label className="">Description</Label>
+            <Textarea
+              className="  focus-visible:ring-white    "
+              autoComplete="off"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="  grid  gap-4">
+            <Label className="">Type</Label>
+            <Input
+              className="  focus-visible:ring-white  "
+              autoComplete="off"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Switch
+              onCheckedChange={showCompletion}
+              checked={show}
+              id="airplane-mode"
+            />
+            <Label htmlFor="airplane-mode">completion Date</Label>
+          </div>
+          {show && (
+            <div className=" grid gap-4 ">
+              <DatePicker
+                completionDate={completionDate}
+                setCompletionDate={setCompletionDate}
+              />
+            </div>
+          )}
+          <div className="flex items-center space-x-2">
+            <Switch id="airplane-mode" />
+            <Label htmlFor="airplane-mode">Private</Label>
+          </div>
+          <Button>Preview</Button>
+        </div>
       </div>
     </div>
   );
