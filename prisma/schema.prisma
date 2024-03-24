@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id            String         @id @default(uuid())
+  userId        String         @unique
+  name          String
+  email         String         @unique @db.VarChar(255) // email must be unique
+  pfp           String
+  arcs          Arc[]
+  upvotes       Upvotes[]
+  public        Boolean
+  currentStatus String
+  SocialLinks   String[]
+  createdAt     DateTime       @default(now())
+  Notification  Notification[]
+
+  // Followers: Profiles that follow this profile
+  followers Follow[] @relation("FollowingRelation")
+
+  // Following: Profiles that this profile follows
+  following Follow[] @relation("FollowerRelation")
+  // TrainingArc   TrainingArc? @relation(fields: [trainingArcId], references: [id])
+  // trainingArcId String?
+}
+
+model Arc {
+  id             String         @id @default(uuid())
+  title          String
+  description    String
+  private        Boolean
+  proof          String //url or project url
+  type           String
+  image          String
+  completiontime DateTime
+  progress       ArcProgress[]
+  status         String
+  profileId      String
+  profile        Profile        @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  todo           ArcTodos[]
+  upvote         Upvotes[]
+  isCompleted    Boolean        @default(false)
+  Notification   Notification[]
+
+  @@index([profileId])
+}
+
+model ArcTodos {
+  id            String   @id @default(uuid())
+  dateTime      DateTime @default(now())
+  todo          String
+  arcId         String
+  arc           Arc      @relation(fields: [arcId], references: [id], onDelete: Cascade)
+  isChecked     Boolean  @default(false)
+  // TrainingArc   TrainingArc? @relation(fields: [trainingArcId], references: [id])
+  trainingArcId String?
+
+  @@index([arcId])
+}
+
+//todoist integration
+
+// 52finger45@ayush
+
+model ArcProgress {
+  id        String   @id @default(uuid())
+  dateTime  DateTime @default(now())
+  update    String
+  arcId     String
+  arc       Arc      @relation(fields: [arcId], references: [id], onDelete: Cascade)
+  isChecked Boolean  @default(false)
+
+  @@index([arcId])
+}
+
+model Upvotes {
+  Id    String @id @default(uuid())
+  arcId String
+  arc   Arc    @relation(fields: [arcId], references: [id], onDelete: Cascade)
+
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([arcId, profileId])
+  @@index([arcId])
+  @@index([profileId])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  type      String // Can be 'UPVOTE', 'COMMENT', etc. For now, we'll focus on 'UPVOTE'
+  message   String // Custom message for the notification, e.g., "Someone has upvoted your arc!"
+  seen      Boolean  @default(false) // Indicates if the notification has been seen
+  createdAt DateTime @default(now())
+  profileId String // The ID of the profile who should receive this notification
+  profile   Profile  @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  arcId     String? // Optional. The ID of the arc that was upvoted. This can be null for other types of notifications.
+  arc       Arc?     @relation(fields: [arcId], references: [id], onDelete: SetNull)
+
+  @@index([profileId])
+  @@index([arcId])
+}
+
+model Follow {
+  id          String   @id @default(uuid())
+  followerId  String // The ID of the profile that is following another profile
+  followingId String // The ID of the profile being followed
+  createdAt   DateTime @default(now())
+
+  // Relation to the follower profile
+  follower Profile @relation("FollowerRelation", fields: [followerId], references: [userId])
+
+  // Relation to the following profile
+  following Profile @relation("FollowingRelation", fields: [followingId], references: [userId])
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+// model TrainingArc {
+//   id        String     @id @default(uuid())
+//   title     String
+//   Followers Profile[]
+//   CreatedBy String
+//   createdAt DateTime
+//   todos     ArcTodos[]
+// }
+//features
+// arc title -> give todos -> ask ai to breakdown it -> ai will make each week target with daily todo till due date
+
+// give arc title to ai -> ai will todos for weekwise and daywise with completeion date
+// ai generated blogs of your arc   can be shared publicly 
+//
+
+//basic functionality
+// shareable link
+//invite
+//email
+//blogs
+
+//advance
+//todist integration 
+//reminders feature -> put thing here , where you can  set reminder for any task in todoist . or add reminderss
+// create journal and notes

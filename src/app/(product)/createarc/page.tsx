@@ -1,21 +1,29 @@
 "use client";
-import React from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import axios from "axios";
-import { useState } from "react";
+
 import { toast } from "sonner";
 import { DatePicker } from "@/components/createGoal/datepicker";
 import { Textarea } from "@/components/ui/textarea";
+import { initialProfile } from "@/lib/createprofile";
+import { useEffect, useState } from "react";
 function Page() {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [show, setShow] = useState(false);
   const [completionDate, setCompletionDate] = useState<Date>();
-
+  const create = async () => {
+    const response = await initialProfile();
+    console.log(response);
+  };
+  useEffect(() => {
+    create();
+  }, []);
   const createGoal = async () => {
     const data = {
       name: name,
