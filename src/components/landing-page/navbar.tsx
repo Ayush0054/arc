@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 
 function Navbar() {
   return (
-    <div className=" flex justify-evenly mt-5 top-1 sticky z-10 items-center">
+    <div className=" bg-white  shadow-sm flex justify-evenly py-2 top-0 sticky z-10 items-center">
       <h1 className=" text-5xl font-semibold">Arc</h1>
       <div className=" flex justify-evenly gap-5 text-gray-500">
         <Link href="/">Home</Link>

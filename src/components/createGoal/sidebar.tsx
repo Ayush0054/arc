@@ -1,12 +1,13 @@
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { Button } from "../ui/button";
 
 function Sidebar() {
   const { push } = useRouter();
   const { userId } = useAuth();
   return (
-    <div className="w-[700px] border-r-2 items-end lg:flex hidden lg:flex-col">
+    <div className="w-[300px]  items-end lg:flex hidden lg:flex-col">
       <div className=" flex flex-col gap-5   w-[200px] h-[100vh] pt-5   ">
         <div className=" flex flex-col gap-5 ">
           <a
@@ -27,6 +28,7 @@ function Sidebar() {
           >
             Your Profile
           </button>
+          {/* <Button>Add Arc</Button> */}
         </div>
       </div>
     </div>

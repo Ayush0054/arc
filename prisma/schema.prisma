@@ -146,7 +146,7 @@ model Follow {
 
 // give arc title to ai -> ai will todos for weekwise and daywise with completeion date
 // ai generated blogs of your arc   can be shared publicly 
-//
+//google calendar integrations
 
 //basic functionality
 // shareable link

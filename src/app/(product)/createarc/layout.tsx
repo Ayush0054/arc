@@ -1,4 +1,5 @@
 "use client";
+import Sidebar from "@/components/createGoal/sidebar";
 import { UserButton } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 
@@ -20,11 +21,14 @@ function CreateLayout({ children }: CreateLayoutProps) {
   }, []);
 
   return (
-    <div>
-      <div className=" flex justify-end p-2 px-10">
-        <UserButton afterSignOutUrl="/" />
+    <div className=" flex justify-between">
+      <Sidebar />
+      <div className=" lg:w-[100vw] w-full ">
+        <div className=" flex justify-end p-2 px-10">
+          <UserButton afterSignOutUrl="/" />
+        </div>
+        {children}
       </div>
-      {children}
     </div>
   );
 }

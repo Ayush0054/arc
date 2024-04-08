@@ -11,7 +11,9 @@ import { DatePicker } from "@/components/createGoal/datepicker";
 import { Textarea } from "@/components/ui/textarea";
 import { initialProfile } from "@/lib/createprofile";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 function Page() {
+  const navigate = useRouter();
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [type, setType] = useState<string>("");
@@ -60,7 +62,9 @@ function Page() {
       setShow(false);
     }
   };
-
+  const handleClick = () => {
+    navigate.push("/createarc/preview");
+  };
   return (
     <div>
       {/* <div className=" p-3 mt-8 flex justify-start gap-2">
@@ -116,7 +120,7 @@ function Page() {
             <Switch id="airplane-mode" />
             <Label htmlFor="airplane-mode">Private</Label>
           </div>
-          <Button>Preview</Button>
+          <Button onClick={handleClick}>Create Todos</Button>
         </div>
       </div>
     </div>
