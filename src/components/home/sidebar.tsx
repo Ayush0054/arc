@@ -15,9 +15,7 @@ function Sidebar() {
             onClick={() => {
               push(`/feed`);
             }}
-          >
-            
-          </a>
+          ></a>
         </div>
         <div className=" flex flex-col gap-16 items-center ">
           <button
@@ -28,7 +26,24 @@ function Sidebar() {
           >
             Your Profile
           </button>
-          <Button>Add Arc</Button>
+          <div className=" flex flex-col gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                push("/createarc");
+              }}
+            >
+              Add Arc
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                push("/createarc");
+              }}
+            >
+              Add Notes
+            </Button>
+          </div>
         </div>
       </div>
     </div>
