@@ -13,8 +13,8 @@ function Sidebar() {
   const { push } = useRouter();
   const { userId } = useAuth();
   return (
-    <div className="w-[300px]  items-end lg:flex hidden lg:flex-col">
-      <div className=" flex flex-col gap-5   w-[200px] h-[100vh] pt-5 items-center   ">
+    <div className="w-[300px]   lg:flex hidden h-[100vh] lg:flex-col border-r-2 ">
+      <div className=" flex flex-col gap-5     pt-5 items-center  ">
         <a
           className="font-bold text-3xl "
           onClick={() => {
@@ -32,14 +32,14 @@ function Sidebar() {
           Your Profile
         </a>
 
-        <Collapsible>
-          <CollapsibleTrigger>
+        <Collapsible className=" w-full ">
+          <CollapsibleTrigger className=" w-full">
             {" "}
-            <h1 className=" text-gray-600 text-xl border-b-2 font-semibold my-5 flex items-center gap-3">
+            <h1 className=" text-gray-600 text-xl border-b-2 justify-center  font-semibold my-5 flex items-center gap-3">
               Your Tasks <ListCollapse className="h-4 w-4" />
             </h1>
           </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-2 flex flex-col">
+          <CollapsibleContent className="space-y-2 flex flex-col px-2">
             <a
               className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm text-center"
               href=""
