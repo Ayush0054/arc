@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,7 +16,6 @@ model Profile {
   pfp    String
   arcs   Arc[]
 
-  public        Boolean
   currentStatus String
   // SocialLinks   String[]
   createdAt     DateTime @default(now())
@@ -32,34 +25,32 @@ model Arc {
   id             String        @id @default(uuid())
   title          String
   description    String
-  private        Boolean
-  proof          String //url or project url
   type           String
   image          String
   completiontime DateTime
-  progress       ArcProgress[]
   status         String
   profileId      String
   profile        Profile       @relation(fields: [profileId], references: [userId], onDelete: Cascade)
   createdAt      DateTime      @default(now())
   todo           ArcTodos[]
-
-  isCompleted Boolean @default(false)
+  isCompleted    Boolean       @default(false)
+  Notes          Notes[]
+  ArcProgress    ArcProgress[]
 
   @@index([profileId])
 }
 
 model ArcTodos {
-  id            String   @id @default(uuid())
-  dateTime      DateTime @default(now())
+  id            String        @id @default(uuid())
+  dateTime      DateTime      @default(now())
   todo          String
   arcId         String
-  arc           Arc      @relation(fields: [arcId], references: [id], onDelete: Cascade)
-  isChecked     Boolean  @default(false)
-  IsCheckedTime DateTime
-
-  trainingArcId String?
+  arc           Arc           @relation(fields: [arcId], references: [id], onDelete: Cascade)
+  isChecked     Boolean       @default(false)
+  IsCheckedTime DateTime?
   ArcProgress   ArcProgress[]
+  isReminder    Boolean
+  Reminder      DateTime?
 
   @@index([arcId])
 }
@@ -72,15 +63,22 @@ model ArcProgress {
   id       String   @id @default(uuid())
   dateTime DateTime @default(now())
   update   String
-  arcTodo  String
 
-  arcId    String
-  arc      Arc      @relation(fields: [arcId], references: [id], onDelete: Cascade)
-  arcTodos ArcTodos @relation(fields: [arcTodo], references: [id])
+  arcId String
+  arc   Arc    @relation(fields: [arcId], references: [id], onDelete: Cascade)
 
-  isChecked Boolean @default(false)
+  isChecked  Boolean   @default(false)
+  ArcTodos   ArcTodos? @relation(fields: [arcTodosId], references: [id])
+  arcTodosId String?
 
   @@index([arcId])
+}
+
+model Notes {
+  id      String @id @default(uuid())
+  content String
+  arcId   String
+  arc     Arc    @relation(fields: [arcId], references: [id], onDelete: Cascade)
 }
 
 //features
@@ -111,3 +109,6 @@ model ArcProgress {
 // arc progress and arc todo context
 // arc todo notes feature
 // arc week feature with time completion
+
+// reminder will take todos as a input
+// nootes willbe saved under arc

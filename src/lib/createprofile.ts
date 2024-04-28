@@ -26,7 +26,6 @@ export const initialProfile = async () => {
       name: `${user.firstName} ${user.lastName}`,
       email: user.emailAddresses[0].emailAddress,
       pfp: user.imageUrl,
-      public: true,
       currentStatus: "Offline",
     },
   });

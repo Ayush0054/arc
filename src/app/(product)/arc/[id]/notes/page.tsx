@@ -2,7 +2,11 @@
 import { Card } from "@/components/ui/card";
 import { Block } from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import {
+  BlockNoteView,
+  defaultColorScheme,
+  useCreateBlockNote,
+} from "@blocknote/react";
 import "@blocknote/react/style.css";
 import { useState } from "react";
 
@@ -28,16 +32,16 @@ function Page() {
     ],
   });
   return (
-    <Card className=" min-h-[90vh] bg-[#ffffff]  m-8">
-      <h1>your notes</h1>
+    <Card className=" min-h-[90vh]   m-8">
       <BlockNoteView
-        className=" h-full "
+        className=" h-full pt-8 "
         editor={editor}
+        //@ts-ignore
+        theme={defaultColorScheme}
         onChange={() => {
-          // Saves the document JSON to state.
           setBlocks(editor.document);
         }}
-        data-theming-css-variables-demo
+        data-theming-css-demo
       />
     </Card>
   );

@@ -59,32 +59,13 @@
 }
 
 /* Base theme */
-
-/* .bn-container[data-theming-css-variables-demo][data-color-scheme] {
-  --bn-colors-editor-text: #222222;
-  --bn-colors-editor-background: #fcf4f4;
-  --bn-colors-menu-text: #111111;
-  --bn-colors-menu-background: #f8f2f2;
-  --bn-colors-tooltip-text: #252424;
-  --bn-colors-tooltip-background: #f8f2f2;
-  --bn-colors-hovered-text: #ffffff;
-  --bn-colors-hovered-background: #b00000;
-  --bn-colors-selected-text: #ffffff;
-  --bn-colors-selected-background: #c50000;
-  --bn-colors-disabled-text: #9b0000;
-  --bn-colors-disabled-background: #7d0000;
-  --bn-colors-shadow: #640000;
-  --bn-colors-border: #870000;
-  --bn-colors-side-menu: #bababa;
-  --bn-color-highlight-colors: #ffffff;
-  --bn-border-radius: 4px;
-  --bn-font-family: Helvetica Neue, sans-serif;
-
+/* .bn-container[data-theming-css-demo] .bn-editor * {
+  color: blue;
 } */
 
-/* Changes for dark mode */
-.bn-container[data-theming-css-variables-demo][data-color-scheme="dark"] {
-  --bn-colors-editor-text: #070707;
-  --bn-colors-editor-background: #ffffff;
-  --bn-colors-side-menu: #ffffff;
-}
+/* Makes slash menu hovered items blue */
+/* .bn-container[data-theming-css-demo]
+  .bn-slash-menu
+  .mantine-Menu-item[data-hovered] {
+  background-color: blue;
+} */

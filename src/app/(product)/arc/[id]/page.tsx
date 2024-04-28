@@ -74,9 +74,9 @@ function Page() {
       console.error("There was an error!", error.response);
     }
   };
-  useLayoutEffect(() => {
-    scheduleTasks();
-  }, []);
+  // useLayoutEffect(() => {
+  //   scheduleTasks();
+  // }, []);
 
   return (
     <div className=" flex flex-col justify-center container   mt-6">
@@ -106,6 +106,7 @@ function Page() {
           Add Task
         </Button>
         <Button variant="outline">add Notes</Button>
+        <Button variant="outline">add Reminders</Button>
       </div>
       <div className="flex items-center justify-between my-5 space-x-2">
         <Checkbox id="terms" />
