@@ -5,21 +5,67 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import axios from "axios";
-import { Pen, Trash2 } from "lucide-react";
+import { Pen, Stars, Trash2 } from "lucide-react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
 import Cookies from "js-cookie";
-function Page() {
+import {
+  deleteTodoByID,
+  getArcById,
+} from "../../createarc/todo/[arcid]/action";
+import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import DuedateModal from "@/components/arc/duedate-modal";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import EditGoal from "@/components/createGoal/edit-goal";
+interface Params {
+  params: { id: string };
+}
+
+function Page({ params }: Params) {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const [tasks, setTasks] = useState([
-    { title: "Complete project documentation", isDone: false },
-    { title: "Review code for module A", isDone: true },
-    { title: "Prepare presentation slides", isDone: false },
-  ]);
+  const [showCalendar, setShowCalendar] = useState(true);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [userEmail, setUserEmail] = useState("ayush0054march@gmail.com");
   const [preferredTime, setPreferredTime] = useState(
     "2024-04-23T09:00:00-07:00"
   );
+  const [title, setTitle] = useState<string>();
+  const [description, setDescription] = useState<string>();
+  const [type, setType] = useState<string>();
+  const [completionDate, setCompletionDate] = useState<Date>();
+  const [tasks, setTasks] = useState([]);
+
+  const handleEditModal = async () => {
+    setShowEditModal(true);
+  };
+
+  const getGoalDetails = async () => {
+    try {
+      const response = await getArcById(params.id);
+
+      console.log(response);
+      if (!response?.todo) {
+        router.push(`/createarc/todo/${params.id}`);
+        return;
+      }
+      setTitle(response?.title);
+      setDescription(response?.description);
+      setType(response?.type);
+      setCompletionDate(response?.completiontime);
+      console.log(response.todo);
+
+      setTasks(response?.todo);
+    } catch (error) {
+      console.error("Error creating goal:", error);
+    }
+  };
+
   const user = currentUser;
 
   const Session = Cookies.get("__session");
@@ -66,109 +112,86 @@ function Page() {
         console.log(response.data);
         // Handle success (e.g., updating state, showing a message)
       }
-      // else {
-      //   // Handle case where there are no incomplete tasks
-      //   console.log("No incomplete tasks to create an event for.");
-      // }
     } catch (error) {
       console.error("There was an error!", error.response);
     }
   };
-  // useLayoutEffect(() => {
-  //   scheduleTasks();
-  // }, []);
+  useLayoutEffect(() => {
+    // scheduleTasks();
+    getGoalDetails();
+  }, []);
 
   return (
     <div className=" flex flex-col justify-center container   mt-6">
-      <div className=" flex items-center gap-3">
-        30%
-        <Progress value={30} className=" my-4" />
-      </div>
       <div>
-        <h1 className=" text-3xl font-semibold text-start ">learn Rust</h1>
+        <h1 className=" text-3xl font-semibold text-start capitalize  ">
+          {title}
+        </h1>
 
-        <h2 className=" text-xl font-medium text-start mt-6">
+        <h2 className=" text-xl  font-medium text-start mt-6 mb-6 text-gray-700">
           {" "}
-          making trading system with rust
+          {description}
         </h2>
+        <div className=" flex justify-between">
+          <div>
+            <Badge variant="secondary">{type}</Badge>
+          </div>
+          <div className=" flex gap-3">
+            <button onClick={handleEditModal}>
+              <Pen />
+            </button>
+            <Button className="">Add Notes</Button>
+          </div>
+        </div>
       </div>
       <div className=" my-4 flex items-center gap-2">
         <h1></h1>
-        <Input
-          type="text"
-          placeholder="Add new task"
-          // value={newTask}
-          // onChange={handleNewTaskChange}
-        />
-        <Button
-        // onClick={addNewTask}
-        >
-          Add Task
-        </Button>
-        <Button variant="outline">add Notes</Button>
-        <Button variant="outline">add Reminders</Button>
       </div>
-      <div className="flex items-center justify-between my-5 space-x-2">
-        <Checkbox id="terms" />
-        <label
-          htmlFor="terms"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+
+      {tasks?.map((task) => (
+        <div
+          key={task?.id}
+          className="flex items-center justify-between my-5 space-x-2"
         >
-          Accept terms and conditions
-        </label>
-        <div className=" flex gap-2 items-center">
-          <Button variant="outline">Add progress</Button>
-          <Pen />
-          <Trash2 />
+          <Checkbox id={task?.id} value={task.IsChecked} />
+
+          <label
+            htmlFor={`task-${task?.id}`}
+            className="text-lg font-medium font-nunito text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            {task.todo}
+          </label>
+          <div className=" flex gap-3">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="secondary"
+                  className="hover:animate-hover-pop "
+                >
+                  Set Due date
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent side="left" className=" m-4 w-[300px]">
+                <DuedateModal setShowCalendar={setShowCalendar} />
+              </PopoverContent>
+            </Popover>
+            <Button>Add progress</Button>
+          </div>
         </div>
-      </div>
-      <div className="flex items-center justify-between my-5 space-x-2">
-        <Checkbox id="terms" />
-        <label
-          htmlFor="terms"
-          className="text-sm line-through text-gray-400 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Accept terms and conditions
-        </label>
-        <div className=" flex gap-2 items-center">
-          <Button variant="outline">Add progress</Button>
-          <Pen />
-          <Trash2 />
-        </div>
-      </div>
-      <div className="flex items-center justify-between my-5 space-x-2">
-        <Checkbox id="terms" />
-        <label
-          htmlFor="terms"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Accept terms and conditions
-        </label>
-        <div className=" flex gap-2 items-center">
-          <Button variant="outline">Add progress</Button>
-          <Pen />
-          <Trash2 />
-        </div>
-      </div>
-      <div className="flex items-center justify-between my-5 space-x-2">
-        <Checkbox id="terms" />
-        <label
-          htmlFor="terms"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Accept terms and conditions
-        </label>
-        <div className=" flex gap-2 items-center">
-          <Button variant="outline">Add progress</Button>
-          <Pen />
-          <Trash2 />
-        </div>
-      </div>
-      <div className=" flex gap-6">
-        <Button>Updates</Button>
-        <Button variant="secondary">Save changes</Button>
-      </div>
+      ))}
+
       {showModal && <ProgressModal />}
+      {showEditModal && (
+        <EditGoal
+          getGoalDetail={getGoalDetails}
+          arcId={params.id}
+          name={title}
+          description={description}
+          type={type}
+          completionDate={completionDate}
+          setShowEditModal={setShowEditModal}
+        />
+      )}
     </div>
   );
 }

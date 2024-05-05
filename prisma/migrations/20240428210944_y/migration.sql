@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "ArcTodos" ALTER COLUMN "IsCheckedTime" DROP NOT NULL,
+ALTER COLUMN "Reminder" DROP NOT NULL;

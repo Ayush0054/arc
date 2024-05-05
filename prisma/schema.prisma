@@ -62,14 +62,15 @@ model ArcTodos {
 model ArcProgress {
   id       String   @id @default(uuid())
   dateTime DateTime @default(now())
-  update   String
+  progress String
 
   arcId String
   arc   Arc    @relation(fields: [arcId], references: [id], onDelete: Cascade)
 
-  isChecked  Boolean   @default(false)
-  ArcTodos   ArcTodos? @relation(fields: [arcTodosId], references: [id])
-  arcTodosId String?
+  isChecked     Boolean?  @default(false)
+  IsCheckedTime DateTime?
+  ArcTodos      ArcTodos? @relation(fields: [arcTodosId], references: [id], onDelete: Cascade)
+  arcTodosId    String?
 
   @@index([arcId])
 }

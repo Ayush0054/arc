@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 
 import { PenIcon, Plus, X, Trash2, Pen, Stars } from "lucide-react";
@@ -9,21 +8,31 @@ import { Input } from "@/components/ui/input";
 // import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import axios from "axios";
-import { getArcById } from "./action";
+// import { getArcById } from "./action";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
-interface Params {
-  params: { arcid: string };
-}
 
-function Page({ params }: Params) {
+function CreateTaskModal({
+  arcId,
+  name,
+  description,
+  type,
+  completionDate,
+}: {
+  // onClose: () => void;
+  arcId: string;
+  name: string;
+  description: string;
+  type: string;
+  completionDate: any;
+}) {
   const { push } = useRouter();
   const router = useRouter();
-  const [title, setTitle] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  const [type, setType] = useState<string>();
-  const [completionDate, setCompletionDate] = useState<Date>();
+  //   const [title, setTitle] = useState<string>();
+  //   const [description, setDescription] = useState<string>();
+  //   const [type, setType] = useState<string>();
+  //   const [completionDate, setCompletionDate] = useState<Date>();
   const [theInput, setTheInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
@@ -37,48 +46,17 @@ function Page({ params }: Params) {
   const [editValue, setEditValue] = useState("");
   const [newTask, setNewTask] = useState("");
 
-  // TODO : function to check if todos already existed then redirect to arc]id] page
-
-  // const getGoalDetails = async () => {
-  //   try {
-  //     const response = await getArcById(params.arcid);
-
-  //     console.log(response);
-  //     if (!response?.todo.length === 0) {
-  //       router.push(`/arc/${params.arcid}`);
-  //       return;
-  //     }
-  //     setTitle(response?.title);
-  //     setDescription(response?.description);
-  //     setType(response?.type);
-  //     setCompletionDate(response?.completiontime);
-  //   } catch (error) {
-  //     console.error("Error creating goal:", error);
-  //   }
-  // };
-  // const checkcachedTask = async () => {
-  //   const cachedTask = JSON.parse(localStorage.getItem(`task ${params.arcid}`));
-  //   if (cachedTask) {
-  //     setTasks(await cachedTask);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getGoalDetails();
-  //   checkcachedTask();
-  // }, []);
-
   const CreateTodosFromAi = async () => {
-    // checkcachedTask();
     setIsLoading(true);
     let temp = messages;
     temp.push({
       role: "user",
-      content: `title for task : ${title} description for task : ${description}  type of task : ${type}  completion date : ${completionDate} `,
+      content: `title for task : ${name} description for task : ${description}  type of task : ${type}  completion date : ${completionDate} `,
     });
     setMessages(temp);
     setTheInput("");
     console.log("Calling OpenAI...");
-    console.log(title, description, type, completionDate);
+    console.log(name, description, type, completionDate);
 
     console.log(messages[0].content);
 
@@ -109,12 +87,6 @@ function Page({ params }: Params) {
     setTasks(updatedTasks); // Update tasks based on matches
 
     // Move the localStorage operation inside a callback to ensure it happens after state updates
-    if (newTasks.length > 0) {
-      localStorage.setItem(
-        `task ${params.arcid}`,
-        JSON.stringify(updatedTasks)
-      );
-    }
 
     setIsLoading(false);
   };
@@ -143,55 +115,52 @@ function Page({ params }: Params) {
   const addNewTask = () => {
     if (newTask.trim()) {
       setTasks([...tasks, newTask.trim()]);
-      localStorage.setItem(
-        `task ${params.arcid}`,
-        JSON.stringify([...tasks, newTask.trim()])
-      );
+
       setNewTask("");
     }
   };
 
   const deleteTask = (index) => {
     const updatedTasks = tasks.filter((_, taskIndex) => taskIndex !== index);
-    localStorage.setItem(`task ${params.arcid}`, JSON.stringify(updatedTasks));
+    // localStorage.setItem(`task ${params.arcid}`, JSON.stringify(updatedTasks));
     setTasks(updatedTasks);
   };
   const createArcTodos = async () => {
     const data = {
-      arcId: params.arcid,
+      arcId: arcId,
       todos: tasks,
     };
     try {
       const response = await axios.post("/api/todo", data);
       console.log(response);
-      localStorage.removeItem(`task ${params.arcid}`);
-      router.push(`/arc/${params.arcid}`);
+      localStorage.removeItem(`task ${arcId}`);
+      router.push(`/arc/${arcId}`);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className=" flex flex-col items-center ">
-      <div className=" lg:w-[1000px] justify-center flex flex-col mx-8 ">
-        <div className=" flex flex-col items-center">
-          <div className="mx-4 mb-4 flex items-center gap-2 w-full">
-            <Input
-              className=" w-full"
-              type="text"
-              placeholder="Add new task"
-              value={newTask}
-              onChange={handleNewTaskChange}
-            />
-            <Button onClick={addNewTask}>Add Task</Button>
-          </div>
-          <Button onClick={CreateTodosFromAi} className=" w-3/4 flex gap-2">
-            Create Task using Ai <Stars />
-          </Button>
+    <div className=" flex flex-col justify-between   ">
+      <div className="mx-10 flex flex-col items-center  mb-10 ">
+        <div className=" mb-4 flex items-center gap-2 w-[500px]">
+          <Input
+            className=" w-full"
+            type="text"
+            placeholder="Add new task"
+            value={newTask}
+            onChange={handleNewTaskChange}
+          />
+          <Button onClick={addNewTask}>Add Task</Button>
         </div>
+        <Button onClick={CreateTodosFromAi} className=" w-3/4 flex gap-2">
+          Create Task using Ai <Stars />
+        </Button>
+      </div>
+      <div className="overflow-y-scroll h-[350px] px-10 py-2 bg-slate-50">
         {tasks?.map((item, index) => (
           <div
             key={index}
-            className="flex items-center justify-between my-5 space-x-2"
+            className="flex items-center justify-between mb-5 mt-5 space-x-2 "
           >
             {editIndex === index ? (
               <Input
@@ -222,16 +191,16 @@ function Page({ params }: Params) {
             </div>
           </div>
         ))}
-        <div className=" flex justify-end">
-          {tasks && (
-            <Button onClick={createArcTodos} className="">
-              Create Task
-            </Button>
-          )}
-        </div>
+      </div>
+      <div className=" flex justify-end mt-20 mx-10 ">
+        {tasks.length > 0 && (
+          <Button onClick={createArcTodos} className="">
+            Create Task
+          </Button>
+        )}
       </div>
     </div>
   );
 }
 
-export default Page;
+export default CreateTaskModal;
