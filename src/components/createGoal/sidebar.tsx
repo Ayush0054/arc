@@ -16,7 +16,7 @@ function Sidebar() {
     <div className="w-[300px]   lg:flex hidden h-[100vh] lg:flex-col border-r-2 ">
       <div className=" flex flex-col gap-5     pt-5 items-center  ">
         <a
-          className="font-bold text-3xl "
+          className="font-bold text-3xl font-nunito "
           onClick={() => {
             push(`/feed`);
           }}

@@ -75,7 +75,7 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
       className="fixed inset-0 bg-gray-100 flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
       id="my-modal"
     >
-      <div className="mt-12 border shadow-md h-[700px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl mx-8 gap-3 border-gray-300">
+      <div className="mt-12 border shadow-md h-[750px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl mx-8 gap-3 border-gray-300">
         <div className=" m-4 flex justify-end ">
           <button
             onClick={() => {

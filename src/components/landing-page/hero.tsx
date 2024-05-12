@@ -1,5 +1,5 @@
 import React from "react";
-import heroImage from "@/assets/hero.png";
+import heroImage from "@/assets/image.png";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";

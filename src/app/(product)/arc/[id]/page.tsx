@@ -10,9 +10,11 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
 import Cookies from "js-cookie";
 import {
+  checkTodo,
   deleteTodoByID,
   getArcById,
-} from "../../createarc/todo/[arcid]/action";
+  unCheckTodo,
+} from "../../../actions/action";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import DuedateModal from "@/components/arc/duedate-modal";
@@ -22,6 +24,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import EditGoal from "@/components/createGoal/edit-goal";
+import NotesModal from "@/components/notes/notes-modal";
+
 interface Params {
   params: { id: string };
 }
@@ -31,6 +35,7 @@ function Page({ params }: Params) {
   const [showModal, setShowModal] = useState(false);
   const [showCalendar, setShowCalendar] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
   const [userEmail, setUserEmail] = useState("ayush0054march@gmail.com");
   const [preferredTime, setPreferredTime] = useState(
     "2024-04-23T09:00:00-07:00"
@@ -40,20 +45,27 @@ function Page({ params }: Params) {
   const [type, setType] = useState<string>();
   const [completionDate, setCompletionDate] = useState<Date>();
   const [tasks, setTasks] = useState([]);
-
+  const [checked, setChecked] = useState(false);
   const handleEditModal = async () => {
     setShowEditModal(true);
   };
+  const handleNotesModal = () => {
+    setShowNotes(true);
+  };
+  const handlProgressModal = async () => {
+    setShowModal(true);
+  };
+  console.log(showNotes);
 
   const getGoalDetails = async () => {
     try {
       const response = await getArcById(params.id);
 
       console.log(response);
-      if (!response?.todo) {
-        router.push(`/createarc/todo/${params.id}`);
-        return;
-      }
+      // if (!response?.todo) {
+      //   router.push(`/createarc/todo/${params.id}`);
+      //   return;
+      // }
       setTitle(response?.title);
       setDescription(response?.description);
       setType(response?.type);
@@ -120,14 +132,37 @@ function Page({ params }: Params) {
     // scheduleTasks();
     getGoalDetails();
   }, []);
+  const handleCheckboxChange = async (taskId, isChecked) => {
+    try {
+      // Determine the appropriate function to call based on isChecked
+      console.log(isChecked);
 
+      const updateFunction = isChecked ? unCheckTodo : checkTodo;
+
+      // Make an API call to update the database
+      const updatedTask = await updateFunction(taskId);
+      console.log(updatedTask);
+
+      // Update UI elements based on the successful database update
+      const updatedTasks = tasks.map((task) => {
+        if (task.id === taskId) {
+          // Ensure we're updating the task with the database's updatedTask information
+          return updatedTask;
+        }
+        return task;
+      });
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
+  };
   return (
     <div className=" flex flex-col justify-center container   mt-6">
       <div>
         <h1 className=" text-3xl font-semibold text-start capitalize  ">
           {title}
         </h1>
-
+        {/* <Input className=" border-none focus-visible:ring-0" /> */}
         <h2 className=" text-xl  font-medium text-start mt-6 mb-6 text-gray-700">
           {" "}
           {description}
@@ -140,7 +175,9 @@ function Page({ params }: Params) {
             <button onClick={handleEditModal}>
               <Pen />
             </button>
-            <Button className="">Add Notes</Button>
+            <Button onClick={handleNotesModal} className="">
+              Add Notes
+            </Button>
           </div>
         </div>
       </div>
@@ -151,22 +188,33 @@ function Page({ params }: Params) {
       {tasks?.map((task) => (
         <div
           key={task?.id}
-          className="flex items-center justify-between my-5 space-x-2"
+          className="flex lg:items-center justify-between my-5 space-x-2 cursor-pointer"
         >
-          <Checkbox id={task?.id} value={task.IsChecked} />
+          <Checkbox
+            id={`task-${task?.id}`} // Ensure this is unique
+            checked={task?.isChecked}
+            onCheckedChange={(e) =>
+              handleCheckboxChange(task?.id, task?.isChecked)
+            }
+          />
 
           <label
-            htmlFor={`task-${task?.id}`}
-            className="text-lg font-medium font-nunito text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            htmlFor={`task-${task?.id}`} // This must match the Checkbox id
+            className={`text-lg font-medium font-nunito text-gray-600 leading-none ${
+              task?.isChecked ? "line-through text-gray-400" : "text-gray-600"
+            } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
           >
-            {task.todo}
+            {task?.todo}
           </label>
-          <div className=" flex gap-3">
+          <div className=" lg:flex grid gap-3">
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant="secondary"
-                  className="hover:animate-hover-pop "
+                  className={`hover:animate-hover-pop ${
+                    task?.isChecked ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={task?.isChecked}
                 >
                   Set Due date
                 </Button>
@@ -175,11 +223,16 @@ function Page({ params }: Params) {
                 <DuedateModal setShowCalendar={setShowCalendar} />
               </PopoverContent>
             </Popover>
-            <Button>Add progress</Button>
+            <Button variant="outline" disabled={task?.isChecked}>
+              Add progress
+            </Button>
           </div>
         </div>
       ))}
 
+      <div className=" mt-8 flex justify-end">
+        <Button disabled>Save</Button>
+      </div>
       {showModal && <ProgressModal />}
       {showEditModal && (
         <EditGoal
@@ -192,6 +245,7 @@ function Page({ params }: Params) {
           setShowEditModal={setShowEditModal}
         />
       )}
+      {showNotes && <NotesModal setShowNotes={setShowNotes} />}
     </div>
   );
 }
