@@ -33,7 +33,7 @@ function Page() {
       </Button>
       <div className=" flex flex-wrap gap-6 my-5">
         {arcs.map((arc) => (
-          <ArcPost arc={arc} />
+          <ArcPost arc={arc} key={arc.id} />
         ))}
       </div>
       {showCreate && <CreateModal setShowCreate={setShowCreate} />}

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 import { auth, currentUser } from "@clerk/nextjs";
 import { redirectToSignIn } from "@clerk/nextjs";
+import axios from "axios";
 export const getArcById = async (id: any) => {
   const goals = await prisma.arc.findUnique({
     where: {
@@ -25,14 +26,11 @@ export const getArcById = async (id: any) => {
           IsCheckedTime: true,
         },
       },
-      ArcProgress: {
-        select: {
-          arcId: true,
-        },
-      },
       Notes: {
         select: {
           arcId: true,
+          id: true,
+          content: true,
         },
       },
     },
@@ -143,5 +141,68 @@ export const unCheckTodo = async (todoId: any) => {
     return updatedTodo;
   } catch (error) {
     console.error("Request error", error);
+  }
+};
+type Note = {
+  content: object;
+};
+export const saveNotes = async (arcid: any, notes: Note) => {
+  try {
+    const user = await currentUser();
+    //if note already there update it fella
+    if (!user) {
+      return redirectToSignIn();
+    }
+    const getNotes = await prisma.notes.findMany({
+      where: {
+        arcId: arcid,
+      },
+      select: {
+        id: true,
+        content: true,
+      },
+    });
+    if (getNotes[0]?.content) {
+      const updatedNote = await prisma.notes.updateMany({
+        where: {
+          arcId: arcid,
+        },
+        data: {
+          content: notes,
+        },
+      });
+      return updatedNote;
+    }
+    const addNotes = await prisma.notes.create({
+      data: {
+        arcId: arcid,
+        content: notes,
+      },
+    });
+    return addNotes;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getNotes = async (arcid: any) => {
+  try {
+    const user = await currentUser();
+
+    if (!user) {
+      return redirectToSignIn();
+    }
+    const Notes = await prisma.notes.findMany({
+      where: {
+        arcId: arcid,
+      },
+      select: {
+        id: true,
+        content: true,
+      },
+    });
+    return Notes;
+  } catch (error) {
+    console.log(error);
   }
 };

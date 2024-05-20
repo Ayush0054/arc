@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -12,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import axios from "axios";
 
 export function DatePicker({
   completionDate,
@@ -21,6 +20,53 @@ export function DatePicker({
   setCompletionDate: any;
 }) {
   console.log(completionDate);
+  const scheduleTasks = async () => {
+    const getToken = await axios.get(`http://localhost:3000/api/get-token`);
+    console.log(getToken);
+    try {
+      // const incompleteTasks = tasks.filter((task) => !task.isChecked);
+
+      // const eventSummary = `Arc Reminder: ${incompleteTasks.length} tasks left`;
+      // const eventDescription =
+      //   `You have ${incompleteTasks.length} tasks left in Arc: \n` +
+      //   incompleteTasks.map((task) => `- ${task}`).join("\n");
+
+      const event = {
+        summary: "car driving",
+        description: "first task",
+        start: {
+          dateTime: "2024-06-23T09:00:00-07:00",
+          timeZone: "America/Los_Angeles",
+        },
+        end: {
+          dateTime: new Date(
+            new Date("2024-06-23T09:00:00-07:00").getTime() + 30 * 60000
+          ).toISOString(), // 30 minutes after start
+          timeZone: "America/Los_Angeles",
+        },
+      };
+      console.log(event);
+      console.log(getToken.data.output[0].token);
+
+      const response = await axios.post(
+        "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+        event,
+
+        {
+          headers: {
+            Authorization: `Bearer ${getToken.data.output[0].token}`,
+            // "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(event),
+        }
+      );
+
+      console.log(response.data);
+      // Handle success (e.g., updating state, showing a message)
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
+  };
 
   return (
     <Popover>

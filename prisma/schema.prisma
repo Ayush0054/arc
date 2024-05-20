@@ -22,7 +22,7 @@ model Profile {
 }
 
 model Arc {
-  id             String        @id @default(uuid())
+  id             String     @id @default(uuid())
   title          String
   description    String
   type           String
@@ -30,25 +30,23 @@ model Arc {
   completiontime DateTime
   status         String
   profileId      String
-  profile        Profile       @relation(fields: [profileId], references: [userId], onDelete: Cascade)
-  createdAt      DateTime      @default(now())
+  profile        Profile    @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  createdAt      DateTime   @default(now())
   todo           ArcTodos[]
-  isCompleted    Boolean       @default(false)
+  isCompleted    Boolean    @default(false)
   Notes          Notes[]
-  ArcProgress    ArcProgress[]
 
   @@index([profileId])
 }
 
 model ArcTodos {
-  id            String        @id @default(uuid())
-  dateTime      DateTime      @default(now())
+  id            String    @id @default(uuid())
+  dateTime      DateTime  @default(now())
   todo          String
   arcId         String
-  arc           Arc           @relation(fields: [arcId], references: [id], onDelete: Cascade)
-  isChecked     Boolean       @default(false)
+  arc           Arc       @relation(fields: [arcId], references: [id], onDelete: Cascade)
+  isChecked     Boolean   @default(false)
   IsCheckedTime DateTime?
-  ArcProgress   ArcProgress[]
   isReminder    Boolean
   Reminder      DateTime?
 
@@ -59,25 +57,9 @@ model ArcTodos {
 
 // 52finger45@ayush
 
-model ArcProgress {
-  id       String   @id @default(uuid())
-  dateTime DateTime @default(now())
-  progress String
-
-  arcId String
-  arc   Arc    @relation(fields: [arcId], references: [id], onDelete: Cascade)
-
-  isChecked     Boolean?  @default(false)
-  IsCheckedTime DateTime?
-  ArcTodos      ArcTodos? @relation(fields: [arcTodosId], references: [id], onDelete: Cascade)
-  arcTodosId    String?
-
-  @@index([arcId])
-}
-
 model Notes {
   id      String @id @default(uuid())
-  content String
+  content Json?  @db.Json
   arcId   String
   arc     Arc    @relation(fields: [arcId], references: [id], onDelete: Cascade)
 }

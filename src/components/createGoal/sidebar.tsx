@@ -15,14 +15,16 @@ function Sidebar() {
   return (
     <div className="w-[300px]   lg:flex hidden h-[100vh] lg:flex-col border-r-2 ">
       <div className=" flex flex-col gap-5     pt-5 items-center  ">
-        <a
-          className="font-bold text-3xl font-nunito "
-          onClick={() => {
-            push(`/feed`);
-          }}
-        >
-          ARC
-        </a>
+        <div className="border-b-2 w-full text-center ">
+          <a
+            className="font-bold text-3xl  font-nunito "
+            onClick={() => {
+              push(`/feed`);
+            }}
+          >
+            ARC
+          </a>
+        </div>
 
         <a
           onClick={() => {
@@ -35,7 +37,7 @@ function Sidebar() {
         <Collapsible className=" w-full ">
           <CollapsibleTrigger className=" w-full">
             {" "}
-            <h1 className=" text-gray-600 text-xl border-b-2 justify-center  font-semibold my-5 flex items-center gap-3">
+            <h1 className=" text-gray-600 text-xl  justify-center  font-semibold my-5 flex items-center gap-3">
               Your Tasks <ListCollapse className="h-4 w-4" />
             </h1>
           </CollapsibleTrigger>

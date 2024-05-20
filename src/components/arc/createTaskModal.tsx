@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Trash2, Pen, Stars } from "lucide-react";
+import { X, Trash2, Pen, Stars } from "lucide-react";
 
 import "@blocknote/core/fonts/inter.css";
 import { Input } from "@/components/ui/input";
@@ -12,23 +12,21 @@ import { useRouter } from "next/navigation";
 
 function CreateTaskModal({
   arcId,
-  name,
+  title,
   description,
   type,
   completionDate,
+  setShowCreateTask,
 }: {
   arcId: string;
-  name: string;
+  title: string;
   description: string;
   type: string;
+  setShowCreateTask: any;
   completionDate: any;
 }) {
-  const { push } = useRouter();
   const router = useRouter();
-  //   const [title, setTitle] = useState<string>();
-  //   const [description, setDescription] = useState<string>();
-  //   const [type, setType] = useState<string>();
-  //   const [completionDate, setCompletionDate] = useState<Date>();
+
   const [theInput, setTheInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
@@ -47,12 +45,12 @@ function CreateTaskModal({
     let temp = messages;
     temp.push({
       role: "user",
-      content: `title for task : ${name} description for task : ${description}  type of task : ${type} today date : ${new Date()}  completion date : ${completionDate} `,
+      content: `title for task : ${title} description for task : ${description}  type of task : ${type} today date : ${new Date()}  completion date : ${completionDate} `,
     });
     setMessages(temp);
     setTheInput("");
     console.log("Calling OpenAI...");
-    console.log(name, description, type, completionDate);
+    console.log(title, description, type, completionDate);
 
     console.log(messages[0].content);
 
@@ -120,8 +118,8 @@ function CreateTaskModal({
       setNewTask("");
     }
   };
-  //@ts-ignore
-  const deleteTask = (index) => {
+
+  const deleteTask = (index: any) => {
     const updatedTasks = tasks.filter((_, taskIndex) => taskIndex !== index);
     // localStorage.setItem(`task ${params.arcid}`, JSON.stringify(updatedTasks));
     setTasks(updatedTasks);
@@ -141,64 +139,80 @@ function CreateTaskModal({
     }
   };
   return (
-    <div className=" flex flex-col justify-between   ">
-      <div className="mx-10 flex flex-col items-center  mb-10 ">
-        <div className=" mb-4 flex items-center gap-2 w-[500px]">
-          <Input
-            className=" w-full"
-            type="text"
-            placeholder="Add new task"
-            value={newTask}
-            onChange={handleNewTaskChange}
-          />
-          <Button onClick={addNewTask}>Add Task</Button>
-        </div>
-        <Button onClick={CreateTodosFromAi} className=" w-3/4 flex gap-2">
-          Create Task using Ai <Stars />
-        </Button>
-      </div>
-      <div className="overflow-y-scroll h-[350px] px-10 py-2 bg-slate-50">
-        {tasks?.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between mb-5 mt-5 space-x-2 "
+    <div
+      className="fixed inset-0 bg-gray-100 flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
+      id="my-modal"
+    >
+      <div className="mt-12 border shadow-md h-[750px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl mx-8 gap-3 border-gray-300">
+        <div className=" m-4 flex justify-end ">
+          <button
+            onClick={() => {
+              setShowCreateTask(false);
+            }}
           >
-            {editIndex === index ? (
+            <X />
+          </button>
+        </div>
+        <div className=" flex flex-col justify-between   ">
+          <div className="mx-10 flex flex-col items-center  mb-10 ">
+            <div className=" mb-4 flex items-center gap-2 w-[500px]">
               <Input
-                value={editValue}
-                onChange={handleEditChange}
-                className="text-sm font-medium leading-none w-full border resize-y"
+                className=" w-full"
+                type="text"
+                placeholder="Add new task"
+                value={newTask}
+                onChange={handleNewTaskChange}
               />
-            ) : (
-              <label
-                htmlFor={`task-${index}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {item}
-              </label>
-            )}
-            <div className="flex gap-3">
-              {editIndex === index && (
-                <Button onClick={() => saveEdit(index)}>Save</Button>
-              )}
-              <button onClick={() => deleteTask(index)} className="ml-auto">
-                <Trash2 />
-              </button>
-              {editIndex !== index && (
-                <button onClick={() => startEditing(index)}>
-                  <Pen />
-                </button>
-              )}
+              <Button onClick={addNewTask}>Add Task</Button>
             </div>
+            <Button onClick={CreateTodosFromAi} className=" w-3/4 flex gap-2">
+              Create Task using Ai <Stars />
+            </Button>
           </div>
-        ))}
-      </div>
-      <div className=" flex justify-end mt-20 mx-10 ">
-        {tasks.length > 0 && (
-          <Button onClick={createArcTodos} className="">
-            Create Task
-          </Button>
-        )}
+          <div className="overflow-y-scroll h-[350px] px-10 py-2 bg-slate-50">
+            {tasks?.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between mb-5 mt-5 space-x-2 "
+              >
+                {editIndex === index ? (
+                  <Input
+                    value={editValue}
+                    onChange={handleEditChange}
+                    className="text-sm font-medium leading-none w-full border resize-y"
+                  />
+                ) : (
+                  <label
+                    htmlFor={`task-${index}`}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {item}
+                  </label>
+                )}
+                <div className="flex gap-3">
+                  {editIndex === index && (
+                    <Button onClick={() => saveEdit(index)}>Save</Button>
+                  )}
+                  <button onClick={() => deleteTask(index)} className="ml-auto">
+                    <Trash2 />
+                  </button>
+                  {editIndex !== index && (
+                    <button onClick={() => startEditing(index)}>
+                      <Pen />
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className=" flex justify-end mt-20 mx-10 ">
+            {tasks.length > 0 && (
+              <Button onClick={createArcTodos} className="">
+                Create Task
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
