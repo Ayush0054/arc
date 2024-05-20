@@ -65,11 +65,6 @@ export async function GET(request: Request) {
             arcId: true,
           },
         },
-        ArcProgress: {
-          select: {
-            arcId: true,
-          },
-        },
         Notes: {
           select: {
             arcId: true,

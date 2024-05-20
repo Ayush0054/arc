@@ -246,7 +246,14 @@ function Page({ params }: Params) {
                 </Button>
               </PopoverTrigger>
               <PopoverContent side="top" className=" m-4 w-[300px]">
-                <DuedateModal task={task?.todo} date={date} setDate={setDate} />
+                <DuedateModal
+                  task={
+                    //@ts-ignore
+                    task?.todo
+                  }
+                  date={date}
+                  setDate={setDate}
+                />
               </PopoverContent>
             </Popover>
           </div>
