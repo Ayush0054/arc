@@ -21,10 +21,10 @@ function CreateLayout({ children }: CreateLayoutProps) {
   }, []);
 
   return (
-    <div className=" flex justify-between">
+    <div className=" flex justify-between bg-slate-50 ">
       <Sidebar />
       <div className=" lg:w-[100vw] w-full ">
-        <div className=" flex justify-end p-2 px-10">
+        <div className=" flex justify-end  py-3  px-10 border-b-[1px]">
           <UserButton afterSignOutUrl="/" />
         </div>
         {children}

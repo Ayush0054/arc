@@ -13,9 +13,9 @@ function Sidebar() {
   const { push } = useRouter();
   const { userId } = useAuth();
   return (
-    <div className="w-[300px]   lg:flex hidden h-[100vh] lg:flex-col border-r-2 ">
+    <div className="w-[300px]   lg:flex hidden h-[100vh] lg:flex-col border-r-[1px] ">
       <div className=" flex flex-col gap-5     pt-5 items-center  ">
-        <div className="border-b-2 w-full text-center ">
+        <div className="border-b-[1px] w-full text-center ">
           <a
             className="font-bold text-3xl  font-nunito "
             onClick={() => {

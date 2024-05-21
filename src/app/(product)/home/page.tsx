@@ -16,8 +16,8 @@ function Page() {
   const [arcs, setArcs] = useState([]);
   const getArcs = async () => {
     const res = await getArcByProfileId();
-    setArcs(res.arcs);
-    console.log(res.arcs);
+    setArcs(res?.arcs);
+    console.log(res?.arcs);
   };
   useEffect(() => {
     getArcs();
@@ -32,8 +32,8 @@ function Page() {
         <Plus /> Create your first Task
       </Button>
       <div className=" flex flex-wrap gap-6 my-5">
-        {arcs.map((arc) => (
-          <ArcPost arc={arc} key={arc.id} />
+        {arcs?.map((arc) => (
+          <ArcPost arc={arc} key={arc?.id} />
         ))}
       </div>
       {showCreate && <CreateModal setShowCreate={setShowCreate} />}

@@ -24,6 +24,7 @@ import {
 import EditGoal from "@/components/createGoal/edit-goal";
 import NotesModal from "@/components/notes/notes-modal";
 import CreateTaskModal from "@/components/arc/createTaskModal";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Params {
   params: { id: string };
@@ -185,80 +186,81 @@ function Page({ params }: Params) {
       <div className=" my-4 flex items-center gap-2">
         <h1></h1>
       </div>
-
-      {tasks?.map((task) => (
-        <div
-          key={
-            //@ts-ignore
-            task?.id
-          }
-          className="flex lg:items-center justify-between my-5 space-x-2 cursor-pointer"
-        >
-          <Checkbox
-            id={`task-${
+      <ScrollArea className="h-[600px]  rounded-md border p-4">
+        {tasks?.map((task) => (
+          <div
+            key={
               //@ts-ignore
               task?.id
-            }`} // Ensure this is unique
-            checked={
-              //@ts-ignore
-              task?.isChecked
             }
-            onCheckedChange={(e) =>
-              handleCheckboxChange(
+            className="flex lg:items-center justify-between my-5 space-x-2 cursor-pointer"
+          >
+            <Checkbox
+              id={`task-${
                 //@ts-ignore
-                task?.id,
+                task?.id
+              }`} // Ensure this is unique
+              checked={
                 //@ts-ignore
                 task?.isChecked
-              )
-            }
-          />
+              }
+              onCheckedChange={(e) =>
+                handleCheckboxChange(
+                  //@ts-ignore
+                  task?.id,
+                  //@ts-ignore
+                  task?.isChecked
+                )
+              }
+            />
 
-          <label
-            htmlFor={`task-${
-              //@ts-ignore
-              task?.id
-            }`} // This must match the Checkbox id
-            className={`text-lg font-medium font-nunito text-gray-600 leading-none ${
-              //@ts-ignore
-              task?.isChecked ? "line-through text-gray-400" : "text-gray-600"
-            } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
-          >
-            {
-              //@ts-ignore
-              task?.todo
-            }
-          </label>
-          <div className=" lg:flex grid gap-3">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="secondary"
-                  className={`hover:animate-hover-pop ${
-                    //@ts-ignore
-                    task?.isChecked ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={
-                    //@ts-ignore
-                    task?.isChecked
-                  }
-                >
-                  Set Due date
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent side="top" className=" m-4 w-[300px]">
-                <DuedateModal
-                  task={
-                    //@ts-ignore
-                    task?.todo
-                  }
-                  date={date}
-                  setDate={setDate}
-                />
-              </PopoverContent>
-            </Popover>
+            <label
+              htmlFor={`task-${
+                //@ts-ignore
+                task?.id
+              }`} // This must match the Checkbox id
+              className={`text-lg font-medium font-nunito text-gray-600 leading-none ${
+                //@ts-ignore
+                task?.isChecked ? "line-through text-gray-400" : "text-gray-600"
+              } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
+            >
+              {
+                //@ts-ignore
+                task?.todo
+              }
+            </label>
+            <div className=" lg:flex grid gap-3">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    className={`hover:animate-hover-pop ${
+                      //@ts-ignore
+                      task?.isChecked ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={
+                      //@ts-ignore
+                      task?.isChecked
+                    }
+                  >
+                    Set Due date
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent side="top" className=" m-4 w-[300px]">
+                  <DuedateModal
+                    task={
+                      //@ts-ignore
+                      task?.todo
+                    }
+                    date={date}
+                    setDate={setDate}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </ScrollArea>
 
       <div className=" mt-8 flex justify-end">
         <Button disabled>Save</Button>

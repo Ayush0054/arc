@@ -206,3 +206,25 @@ export const getNotes = async (arcid: any) => {
     console.log(error);
   }
 };
+
+// export const setTime = async (todoId, date) => {
+//   try {
+//     const user = await currentUser();
+
+//     if (!user) {
+//       return redirectToSignIn();
+//     }
+//     const updatedTodo = await prisma.arcTodos.update({
+//       where: {
+//         id: todoId,
+//       },
+//       data: {
+//         isReminder: true,
+//         Reminder: date,
+//       },
+//     });
+//     return updatedTodo;
+//   } catch (error) {
+//     console.error("Request error", error);
+//   }
+// };

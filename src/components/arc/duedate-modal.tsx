@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { DatePicker } from "../createGoal/datepicker";
+import React from "react";
+
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
-import { X } from "lucide-react";
-import axios from "axios";
 
+import axios from "axios";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
+
+import { TimePickerDemo } from "./time-picker-demo";
 function DuedateModal({
   task,
   date,
@@ -27,13 +30,14 @@ function DuedateModal({
         // description: "first task",
         start: {
           dateTime: date,
-          timeZone: "America/Los_Angeles",
+          time: "5:00",
+          // timeZone: "America/Los_Angeles",
         },
         end: {
           dateTime: new Date(
             new Date(date).getTime() + 30 * 60000
           ).toISOString(), // 30 minutes after start
-          timeZone: "America/Los_Angeles",
+          // timeZone: "America/Los_Angeles",
         },
       };
       console.log(event);
@@ -57,9 +61,11 @@ function DuedateModal({
       console.error("There was an error!", error);
     }
   };
+
   return (
     <div>
-      <div className="  ">
+      {/* <div className="  ">
+        <TimePicker onChange={onChange} value={value} />
         <Calendar
           mode="single"
           selected={date}
@@ -72,6 +78,17 @@ function DuedateModal({
           Set Google Reminder
         </Button>
         <Button>set</Button>
+      </div> */}
+
+      <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+      <div className="p-3 border-t border-border">
+        <TimePickerDemo setDate={setDate} date={date} />
+      </div>
+      <div className=" flex justify-between mt-4 w-full ">
+        <Button onClick={scheduleTasks} className=" w-full" variant="outline">
+          Set Google Reminder
+        </Button>
+        {/* <Button>set</Button> */}
       </div>
     </div>
   );
