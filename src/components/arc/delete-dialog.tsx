@@ -27,7 +27,7 @@ function DeleteDialog({ handleDelete }: { handleDelete: any }) {
 
           <DialogFooter className="sm:justify-start">
             <div className=" flex gap-2">
-              <Button onClick={handleDelete} variant="secondary">
+              <Button onClick={handleDelete} variant="destructive">
                 Delete
               </Button>
               <DialogClose asChild>
