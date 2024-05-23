@@ -1,5 +1,6 @@
 "use client";
 import Sidebar from "@/components/createGoal/sidebar";
+import { ModeToggle } from "@/components/ModeToggle";
 import { UserButton } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 
@@ -21,10 +22,11 @@ function CreateLayout({ children }: CreateLayoutProps) {
   }, []);
 
   return (
-    <div className=" flex justify-between bg-slate-50 ">
-      <Sidebar />
-      <div className=" lg:w-[100vw] w-full ">
-        <div className=" flex justify-end  py-3  px-10 border-b-[1px]">
+    <div className="  flex justify-between  ">
+      {/* <Sidebar /> */}
+      <div className=" container lg:w-[100vw] w-full ">
+        <div className=" flex justify-end gap-5 py-3  px-10 border-b-[1px]">
+          <ModeToggle />
           <UserButton afterSignOutUrl="/" />
         </div>
         {children}

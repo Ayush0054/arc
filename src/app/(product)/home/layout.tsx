@@ -22,8 +22,8 @@ function CreateLayout({ children }: CreateLayoutProps) {
 
   return (
     <div className=" flex justify-between">
-      <Sidebar />
-      <div className=" lg:w-[100vw] w-full ">
+      {/* <Sidebar /> */}
+      <div className=" container lg:w-[100vw] w-full ">
         <div className=" flex justify-end p-2 px-10">
           <UserButton afterSignOutUrl="/" />
         </div>

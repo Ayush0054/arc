@@ -25,18 +25,20 @@ import EditGoal from "@/components/createGoal/edit-goal";
 import NotesModal from "@/components/notes/notes-modal";
 import CreateTaskModal from "@/components/arc/createTaskModal";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import DeleteDialog from "@/components/arc/delete-dialog";
+import { deleteArcById } from "@/app/actions/arc/action";
+import { useRouter } from "next/navigation";
 
 interface Params {
   params: { id: string };
 }
 
 function Page({ params }: Params) {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
-  const [userEmail, setUserEmail] = useState("ayush0054march@gmail.com");
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
@@ -44,27 +46,17 @@ function Page({ params }: Params) {
   const [completionDate, setCompletionDate] = useState<Date>();
   const [tasks, setTasks] = useState([]);
   const [notes, setNotes] = useState();
-  const [checked, setChecked] = useState(false);
   const handleEditModal = async () => {
     setShowEditModal(true);
   };
   const handleNotesModal = () => {
     setShowNotes(true);
   };
-  const handlProgressModal = async () => {
-    setShowModal(true);
-  };
-  console.log(showNotes);
 
   const getGoalDetails = async () => {
     try {
       const response = await getArcById(params.id);
 
-      console.log(response);
-      // if (!response?.todo) {
-      //   router.push(`/createarc/todo/${params.id}`);
-      //   return;
-      // }
       if (response?.todo.length === 0) {
         setShowCreateTask(true);
       }
@@ -74,8 +66,7 @@ function Page({ params }: Params) {
       setCompletionDate(response?.completiontime);
       //@ts-ignore
       setNotes(response?.Notes);
-      //@ts-ignore
-      console.log(response.todo);
+
       //@ts-ignore
       setTasks(response?.todo);
     } catch (error) {
@@ -85,67 +76,21 @@ function Page({ params }: Params) {
 
   const user = currentUser;
 
-  const Session = Cookies.get("__session");
-  // const scheduleTasks = async () => {
-  //   const getToken = await axios.get(`http://localhost:3000/api/get-token`);
-  //   console.log(getToken);
-  //   try {
-  //     const event = {
-  //       summary: "car driving",
-  //       description: "first task",
-  //       start: {
-  //         dateTime: preferredTime,
-  //         timeZone: "America/Los_Angeles",
-  //       },
-  //       end: {
-  //         dateTime: new Date(
-  //           new Date(preferredTime).getTime() + 30 * 60000
-  //         ).toISOString(), // 30 minutes after start
-  //         timeZone: "America/Los_Angeles",
-  //       },
-  //     };
-  //     console.log(event);
+  // const Session = Cookies.get("__session");
 
-  //     const response = await axios.post(
-  //       "https://www.googleapis.com/calendar/v3/calendars/primary/events",
-  //       event,
-
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${getToken.data.output[0].token}`,
-  //           // "Content-Type": "application/json",
-  //         },
-  //         // body: JSON.stringify(event),
-  //       }
-  //     );
-
-  //     console.log(response.data);
-  //     // Handle success (e.g., updating state, showing a message)
-  //   } catch (error) {
-  //     console.error("There was an error!", error);
-  //   }
-  // };
   useEffect(() => {
-    // scheduleTasks();
     getGoalDetails();
   }, []);
   //@ts-ignore
   const handleCheckboxChange = async (taskId, isChecked) => {
     try {
-      // Determine the appropriate function to call based on isChecked
-      console.log(isChecked);
-
       const updateFunction = isChecked ? unCheckTodo : checkTodo;
 
-      // Make an API call to update the database
       const updatedTask = await updateFunction(taskId);
-      console.log(updatedTask);
 
-      // Update UI elements based on the successful database update
       const updatedTasks = tasks.map((task) => {
         //@ts-ignore
         if (task?.id === taskId) {
-          // Ensure we're updating the task with the database's updatedTask information
           return updatedTask;
         }
         return task;
@@ -156,8 +101,33 @@ function Page({ params }: Params) {
       console.error("Error updating task:", error);
     }
   };
-  console.log(new Date());
 
+  const handleDeleteArc = async () => {
+    const res = await deleteArcById(params.id);
+
+    router.push("/home");
+  };
+  //date formating
+  function formatDate(dateString: any) {
+    if (!dateString) {
+      return "Invalid date";
+    }
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return "Invalid date";
+    }
+
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+    return formatter.format(date);
+  }
   return (
     <div className=" flex flex-col justify-center container   mt-6">
       <div>
@@ -169,6 +139,12 @@ function Page({ params }: Params) {
           {" "}
           {description}
         </h2>
+        <Badge
+          variant="secondary"
+          className=" my-2 rounded-[7px] bg-blue-100 hover:bg-blue-100 border-blue-400 border-2"
+        >
+          {formatDate(completionDate)}
+        </Badge>
         <div className=" flex justify-between">
           <div>
             <Badge variant="secondary">{type}</Badge>
@@ -180,6 +156,7 @@ function Page({ params }: Params) {
             <Button onClick={handleNotesModal} className="">
               Add Notes
             </Button>
+            <DeleteDialog handleDelete={handleDeleteArc} />
           </div>
         </div>
       </div>
@@ -281,7 +258,7 @@ function Page({ params }: Params) {
         <NotesModal
           setShowNotes={setShowNotes}
           arcid={params.id}
-          notes={notes}
+          // notes={notes}
         />
       )}
       {showCreateTask && (

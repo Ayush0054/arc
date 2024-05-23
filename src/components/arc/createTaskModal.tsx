@@ -163,9 +163,15 @@ function CreateTaskModal({
                 value={newTask}
                 onChange={handleNewTaskChange}
               />
-              <Button onClick={addNewTask}>Add Task</Button>
+              <Button disabled={isLoading} onClick={addNewTask}>
+                Add Task
+              </Button>
             </div>
-            <Button onClick={CreateTodosFromAi} className=" w-3/4 flex gap-2">
+            <Button
+              disabled={isLoading}
+              onClick={CreateTodosFromAi}
+              className=" w-3/4 flex gap-2"
+            >
               Create Task using Ai <Stars />
             </Button>
           </div>
@@ -191,7 +197,12 @@ function CreateTaskModal({
                 )}
                 <div className="flex gap-3">
                   {editIndex === index && (
-                    <Button onClick={() => saveEdit(index)}>Save</Button>
+                    <Button
+                      disabled={isLoading}
+                      onClick={() => saveEdit(index)}
+                    >
+                      Save
+                    </Button>
                   )}
                   <button onClick={() => deleteTask(index)} className="ml-auto">
                     <Trash2 />
@@ -207,7 +218,11 @@ function CreateTaskModal({
           </div>
           <div className=" flex justify-end mt-20 mx-10 ">
             {tasks.length > 0 && (
-              <Button onClick={createArcTodos} className="">
+              <Button
+                disabled={isLoading}
+                onClick={createArcTodos}
+                className=""
+              >
                 Create Task
               </Button>
             )}

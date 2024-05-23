@@ -146,45 +146,6 @@ export const unCheckTodo = async (todoId: any) => {
 type Note = {
   content: object;
 };
-export const saveNotes = async (arcid: any, notes: Note) => {
-  try {
-    const user = await currentUser();
-    //if note already there update it fella
-    if (!user) {
-      return redirectToSignIn();
-    }
-    const getNotes = await prisma.notes.findMany({
-      where: {
-        arcId: arcid,
-      },
-      select: {
-        id: true,
-        content: true,
-      },
-    });
-    if (getNotes[0]?.content) {
-      const updatedNote = await prisma.notes.updateMany({
-        where: {
-          arcId: arcid,
-        },
-        data: {
-          content: notes,
-        },
-      });
-      return updatedNote;
-    }
-    const addNotes = await prisma.notes.create({
-      data: {
-        arcId: arcid,
-        content: notes,
-      },
-    });
-    return addNotes;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const getNotes = async (arcid: any) => {
   try {
     const user = await currentUser();
@@ -202,6 +163,45 @@ export const getNotes = async (arcid: any) => {
       },
     });
     return Notes;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const saveNotes = async (arcid: any, notes: Note) => {
+  try {
+    const user = await currentUser();
+    //if note already there update it fella
+    if (!user) {
+      return redirectToSignIn();
+    }
+    const getNote = await prisma.notes.findMany({
+      where: {
+        arcId: arcid,
+      },
+      select: {
+        id: true,
+        content: true,
+      },
+    });
+    if (getNote[0]?.content) {
+      const updatedNote = await prisma.notes.updateMany({
+        where: {
+          arcId: arcid,
+        },
+        data: {
+          content: notes,
+        },
+      });
+      return updatedNote;
+    }
+    const addNotes = await prisma.notes.create({
+      data: {
+        arcId: arcid,
+        content: notes,
+      },
+    });
+    revalidatePath(`/arc/${arcid}`);
+    return addNotes;
   } catch (error) {
     console.log(error);
   }

@@ -6,6 +6,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/lib/theme-provider";
 export const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -31,7 +32,14 @@ export default function RootLayout({
             GeistSans.variable
           )}
         >
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
