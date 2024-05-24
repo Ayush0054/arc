@@ -104,7 +104,7 @@ function EditGoal({
           damping: 20,
         }}
       >
-        <div className="mt-12 border shadow-md h-[700px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl mx-8 gap-3 border-gray-300">
+        <div className="mt-12 border shadow-md h-[700px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl lg:mx-8 mx-4 gap-3 border-gray-300">
           {" "}
           <div className=" m-4 flex justify-end ">
             <button
@@ -117,8 +117,8 @@ function EditGoal({
             </button>
           </div>
           <div className=" flex flex-col justify-between   ">
-            <div className="mx-10 flex flex-col items-center  mb-10 ">
-              <div className=" mb-4 flex items-center gap-2 w-[500px]">
+            <div className="lg:mx-10 mx-4 flex flex-col items-center  mb-10 ">
+              <div className=" mb-4 flex items-center gap-2 lg:w-[500px]">
                 <Input
                   className=" w-full"
                   type="text"
@@ -137,9 +137,9 @@ function EditGoal({
                 >
                   <label
                     htmlFor={`task-${task?.id}`}
-                    className="text-lg font-medium font-nunito text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="lg:text-lg text-sm font-medium font-nunito text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {task.todo}
+                    {task?.todo}
                   </label>
 
                   <div className="flex gap-3">

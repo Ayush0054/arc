@@ -24,7 +24,7 @@ function CreateLayout({ children }: CreateLayoutProps) {
   return (
     <div className="  flex justify-between  ">
       {/* <Sidebar /> */}
-      <div className=" container lg:w-[100vw] w-full ">
+      <div className=" lg:container max-lg:mx-4 lg:w-[100vw] w-full ">
         <div className=" flex justify-end gap-5 py-3  px-10 border-b-[1px]">
           <ModeToggle />
           <UserButton afterSignOutUrl="/" />

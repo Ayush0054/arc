@@ -129,7 +129,7 @@ function Page({ params }: Params) {
     return formatter.format(date);
   }
   return (
-    <div className=" flex flex-col justify-center container   mt-6">
+    <div className=" flex flex-col justify-center lg:container   mt-6">
       <div>
         <h1 className=" text-3xl font-semibold text-start capitalize  ">
           {title}
@@ -196,7 +196,7 @@ function Page({ params }: Params) {
                 //@ts-ignore
                 task?.id
               }`} // This must match the Checkbox id
-              className={`text-lg font-medium font-nunito text-gray-600 leading-none ${
+              className={` lg:text-lg text-sm  font-medium font-nunito text-gray-600 leading-none ${
                 //@ts-ignore
                 task?.isChecked ? "line-through text-gray-400" : "text-gray-600"
               } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
@@ -211,7 +211,7 @@ function Page({ params }: Params) {
                 <PopoverTrigger asChild>
                   <Button
                     variant="secondary"
-                    className={`hover:animate-hover-pop ${
+                    className={`hover:animate-hover-pop text-[12px] ${
                       //@ts-ignore
                       task?.isChecked ? "opacity-50 cursor-not-allowed" : ""
                     }`}

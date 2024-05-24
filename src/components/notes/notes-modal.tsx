@@ -69,7 +69,7 @@ function NotesModal({
         exit={{ y: 300, opacity: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
-        <div className="min-h-[90vh] min-w-[90vw] m-12 border shadow-md flex flex-col bg-white rounded-xl gap-3 border-gray-300">
+        <div className="min-h-[90vh] min-w-[90vw] lg:m-12 m-4 border shadow-md flex flex-col bg-white rounded-xl gap-3 border-gray-300">
           <Card className="min-h-[90vh] min-w-[90vw]">
             <div className="m-10 flex justify-end gap-3">
               <Button onClick={save}>Save</Button>
