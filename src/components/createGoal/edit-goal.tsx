@@ -4,7 +4,7 @@ import {
   getArcById,
   // updateTodo,
 } from "@/app/actions/action";
-import React, { useLayoutEffect, useState } from "react";
+import React, { FormEvent, useLayoutEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Pen, Stars, Trash2, X } from "lucide-react";
 import { Input } from "../ui/input";
@@ -46,7 +46,7 @@ function EditGoal({
       }
 
       console.log(response.todo);
-
+      //@ts-ignore
       setTasks(response?.todo);
     } catch (error) {
       console.error("Error creating goal:", error);
@@ -57,16 +57,16 @@ function EditGoal({
     getGoalDetails();
   }, []);
 
-  const startEditing = (index) => {
+  const startEditing = (index: any) => {
     setEditIndex(index);
     setEditValue(tasks[index]);
   };
 
-  const handleEditChange = (e) => {
+  const handleEditChange = (e: any) => {
     setEditValue(e.target.value);
   };
 
-  const handleNewTaskChange = (e) => {
+  const handleNewTaskChange = (e: any) => {
     setNewTask(e.target.value);
   };
 
@@ -74,6 +74,7 @@ function EditGoal({
     if (newTask.trim()) {
       try {
         const addedTask = await AddSingleTodo(arcId, newTask.trim());
+        //@ts-ignore
         setTasks([...tasks, addedTask]);
         setNewTask("");
       } catch (error) {
@@ -81,8 +82,9 @@ function EditGoal({
       }
     }
   };
-  const deleteTask = async (id) => {
+  const deleteTask = async (id: any) => {
     console.log(id);
+    //@ts-ignore
     const updatedTasks = tasks.filter((task) => task.id !== id);
     console.log(updatedTasks);
 
@@ -132,19 +134,31 @@ function EditGoal({
             <div className="overflow-y-scroll h-[350px] px-10 py-2">
               {tasks?.map((task) => (
                 <div
-                  key={task?.id}
+                  key={
+                    //@ts-ignore
+                    task?.id
+                  }
                   className="flex items-center justify-between my-5 space-x-2"
                 >
                   <label
-                    htmlFor={`task-${task?.id}`}
+                    htmlFor={`task-${
+                      //@ts-ignore
+                      task?.id
+                    }`}
                     className="lg:text-lg text-sm font-medium font-nunito text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {task?.todo}
+                    {
+                      //@ts-ignore
+                      task?.todo
+                    }
                   </label>
 
                   <div className="flex gap-3">
                     <button
-                      onClick={() => deleteTask(task.id)}
+                      onClick={
+                        //@ts-ignore
+                        () => deleteTask(task.id)
+                      }
                       className="ml-auto"
                     >
                       <Trash2 />

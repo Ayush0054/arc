@@ -142,7 +142,10 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
           </div>
         ) : (
           <CreateTaskModal
-            arcId={arc?.id}
+            arcId={
+              //@ts-ignore
+              arc?.id
+            }
             name={name}
             description={description}
             type={type}

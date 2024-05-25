@@ -89,9 +89,5 @@ model Notes {
 // daily office task can be added from meetings and it can be marked once done
 
 //things to brainstrom
-// arc progress and arc todo context
 // arc todo notes feature
 // arc week feature with time completion
-
-// reminder will take todos as a input
-// nootes willbe saved under arc

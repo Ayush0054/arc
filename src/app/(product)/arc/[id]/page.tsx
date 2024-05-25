@@ -6,13 +6,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Pen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { currentUser } from "@clerk/nextjs";
-import Cookies from "js-cookie";
-import {
-  checkTodo,
-  deleteTodoByID,
-  getArcById,
-  unCheckTodo,
-} from "../../../actions/action";
+
+import { checkTodo, getArcById, unCheckTodo } from "../../../actions/action";
 
 import { Badge } from "@/components/ui/badge";
 import DuedateModal from "@/components/arc/duedate-modal";
@@ -26,8 +21,11 @@ import NotesModal from "@/components/notes/notes-modal";
 import CreateTaskModal from "@/components/arc/createTaskModal";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import DeleteDialog from "@/components/arc/delete-dialog";
-import { deleteArcById } from "@/app/actions/arc/action";
+import { ArcCheckIsDone, deleteArcById } from "@/app/actions/arc/action";
 import { useRouter } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 interface Params {
   params: { id: string };
@@ -46,6 +44,7 @@ function Page({ params }: Params) {
   const [completionDate, setCompletionDate] = useState<Date>();
   const [tasks, setTasks] = useState([]);
   const [notes, setNotes] = useState();
+  const [isCompleted, setIsCompleted] = useState<Boolean>();
   const handleEditModal = async () => {
     setShowEditModal(true);
   };
@@ -69,6 +68,8 @@ function Page({ params }: Params) {
 
       //@ts-ignore
       setTasks(response?.todo);
+      setIsCompleted(response?.isCompleted);
+      // console.log(response);
     } catch (error) {
       console.error("Error creating goal:", error);
     }
@@ -97,6 +98,11 @@ function Page({ params }: Params) {
       });
       //@ts-ignore
       setTasks(updatedTasks);
+      // console.log(updatedTask);
+
+      toast(
+        `task is ${updatedTask?.isChecked === true ? "checked" : "unchecked"}`
+      );
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -128,12 +134,30 @@ function Page({ params }: Params) {
 
     return formatter.format(date);
   }
+  const handleArcCompleted = async () => {
+    const newIsCompleted = !isCompleted;
+    setIsCompleted(newIsCompleted);
+
+    // Use newIsCompleted for the API call to ensure you're using the updated state
+    const response = await ArcCheckIsDone(params.id, newIsCompleted);
+    console.log(response);
+  };
   return (
     <div className=" flex flex-col justify-center lg:container   mt-6">
       <div>
-        <h1 className=" text-3xl font-semibold text-start capitalize  ">
-          {title}
-        </h1>
+        <div className=" flex justify-between items-center">
+          <h1 className=" text-3xl font-semibold text-start capitalize  ">
+            {title}
+          </h1>
+          <div className="lg:flex hidden items-center space-x-2">
+            <Switch
+              id="isDone"
+              checked={isCompleted as boolean}
+              onCheckedChange={handleArcCompleted}
+            />
+            <Label htmlFor="isDone">Mark it as Done</Label>
+          </div>
+        </div>
         {/* <Input className=" border-none focus-visible:ring-0" /> */}
         <h2 className=" text-xl  font-medium text-start mt-6 mb-6 text-gray-700">
           {" "}
@@ -145,14 +169,25 @@ function Page({ params }: Params) {
         >
           {formatDate(completionDate)}
         </Badge>
-        <div className=" flex justify-between">
+        <div className=" lg:flex justify-between">
           <div>
             <Badge variant="secondary">{type}</Badge>
           </div>
-          <div className=" flex gap-3">
-            <button onClick={handleEditModal}>
+          <div className=" lg:flex grid gap-3 max-lg:mt-4">
+            <button className=" lg:block hidden" onClick={handleEditModal}>
               <Pen />
             </button>
+            <div className="flex lg:hidden items-center space-x-2">
+              <Switch
+                id="isDone"
+                checked={isCompleted as boolean}
+                onCheckedChange={handleArcCompleted}
+              />
+              <Label htmlFor="isDone">Mark it as Done</Label>
+            </div>
+            <Button className=" lg:hidden " onClick={handleEditModal}>
+              Edit Tasks
+            </Button>
             <Button onClick={handleNotesModal} className="">
               Add Notes
             </Button>
@@ -170,7 +205,7 @@ function Page({ params }: Params) {
               //@ts-ignore
               task?.id
             }
-            className="flex lg:items-center justify-between my-5 space-x-2 cursor-pointer"
+            className="flex items-center justify-between my-5 space-x-2 cursor-pointer"
           >
             <Checkbox
               id={`task-${
@@ -189,6 +224,7 @@ function Page({ params }: Params) {
                   task?.isChecked
                 )
               }
+              className=" max-md:w-3  max-md:h-3"
             />
 
             <label

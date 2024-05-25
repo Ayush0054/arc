@@ -15,7 +15,9 @@ function DeleteDialog({ handleDelete }: { handleDelete: any }) {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="destructive">Delete</Button>
+          <Button className=" w-full" variant="destructive">
+            Delete
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

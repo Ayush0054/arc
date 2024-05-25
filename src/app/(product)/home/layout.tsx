@@ -1,5 +1,5 @@
 "use client";
-import Sidebar from "@/components/home/sidebar";
+
 import { UserButton } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 

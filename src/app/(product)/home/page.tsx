@@ -4,7 +4,7 @@ import CreateModal from "@/components/createGoal/createModal";
 import ArcPost from "@/components/home/arc-post";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
@@ -33,7 +33,13 @@ function Page() {
       </Button>
       <div className=" flex flex-wrap gap-6 my-5">
         {arcs?.map((arc) => (
-          <ArcPost arc={arc} key={arc?.id} />
+          <ArcPost
+            arc={arc}
+            key={
+              //@ts-ignore
+              arc?.id
+            }
+          />
         ))}
       </div>
       {showCreate && <CreateModal setShowCreate={setShowCreate} />}
