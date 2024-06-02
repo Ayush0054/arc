@@ -5,7 +5,7 @@ import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   const user = await currentUser();
 
   if (!user) {

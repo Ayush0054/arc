@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, res: NextResponse) {
+export async function GET() {
   const user = await currentUser();
   console.log(user?.id);
 
