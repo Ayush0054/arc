@@ -23,5 +23,15 @@ export async function POST(req: Request, res: NextResponse) {
   console.log(completion.choices[0].message);
   const theResponse = completion.choices[0].message;
 
-  return NextResponse.json({ output: theResponse }, { status: 200 });
+  return NextResponse.json(
+    { output: theResponse },
+    {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    }
+  );
 }
