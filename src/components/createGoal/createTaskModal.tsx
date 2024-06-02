@@ -12,26 +12,23 @@ import { toast } from "sonner";
 // import { useAuth, useUser } from "@clerk/nextjs";
 
 function CreateTaskModal({
-  arcId,
   name,
   description,
   type,
   completionDate,
 }: {
-  arcId: string;
   name: string;
   description: string;
   type: string;
   completionDate: any;
 }) {
-  const { push } = useRouter();
   const router = useRouter();
   // const { isLoaded, isSignedIn, user } = useUser();
   //   const [title, setTitle] = useState<string>();
   //   const [description, setDescription] = useState<string>();
   //   const [type, setType] = useState<string>();
   //   const [completionDate, setCompletionDate] = useState<Date>();
-  const [theInput, setTheInput] = useState("");
+  // const [theInput, setTheInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -43,7 +40,7 @@ function CreateTaskModal({
   const [editIndex, setEditIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [newTask, setNewTask] = useState("");
-  const [arc, setArc] = useState();
+  // const [arc, setArc] = useState();
   const CreateTodosFromAi = async () => {
     setIsLoading(true);
     let temp = messages;
@@ -52,7 +49,7 @@ function CreateTaskModal({
       content: `title for task : ${name} description for task : ${description}  type of task : ${type} today date : ${new Date()}  completion date : ${completionDate} `,
     });
     setMessages(temp);
-    setTheInput("");
+    // setTheInput("");
     // console.log("Calling OpenAI...");
     // console.log(name, description, type, completionDate);
 
@@ -199,7 +196,7 @@ function CreateTaskModal({
       // console.log(goalResponse.data);
 
       const newArcId = goalResponse.data.id;
-      setArc(goalResponse.data);
+      // setArc(goalResponse.data);
 
       // Data for creating todos
       const todosData = {

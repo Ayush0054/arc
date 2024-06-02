@@ -4,8 +4,8 @@ import { currentUser } from "@clerk/nextjs";
 import { redirectToSignIn } from "@clerk/nextjs";
 
 export async function POST(req: Request) {
-  const prisma = new PrismaClient();
   try {
+    const prisma = new PrismaClient();
     const user = await currentUser();
     const body = await req.json();
     if (!user) {
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Request error", error);
     return NextResponse.json(
-      { error: "Error retrieving goals" },
+      { error: "Error creating goals" },
       { status: 500 }
     );
   }
