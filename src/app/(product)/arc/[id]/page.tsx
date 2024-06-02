@@ -5,7 +5,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { Pen } from "lucide-react";
 import { useEffect, useState } from "react";
-import { currentUser } from "@clerk/nextjs";
 
 import { checkTodo, getArcById, unCheckTodo } from "../../../actions/action";
 
