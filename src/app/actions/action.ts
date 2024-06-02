@@ -2,9 +2,9 @@
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirectToSignIn } from "@clerk/nextjs";
-import axios from "axios";
+
 export const getArcById = async (id: any) => {
   const goals = await prisma.arc.findUnique({
     where: {
@@ -25,6 +25,14 @@ export const getArcById = async (id: any) => {
           isChecked: true,
           IsCheckedTime: true,
         },
+        orderBy: [
+          {
+            dateTime: "asc", // change to 'desc' if needed
+          },
+          {
+            id: "asc", // change to 'desc' if needed
+          },
+        ],
       },
       Notes: {
         select: {
@@ -35,24 +43,21 @@ export const getArcById = async (id: any) => {
       },
     },
   });
-  console.log(goals);
 
   revalidatePath(`/createarc/todo/${id}`);
   return goals;
 };
 
 export const deleteTodoByID = async (id: any, arcId: any) => {
-  console.log(id);
-
   const todo = await prisma.arcTodos.delete({
     where: {
       id: id,
       arcId: arcId,
     },
   });
-  console.log(todo);
+
   revalidatePath(`/arc/${id}`);
-  // return todo;
+  return todo;
 };
 
 export const AddSingleTodo = async (arcId: any, todo: any) => {
@@ -206,7 +211,13 @@ export const saveNotes = async (arcid: any, notes: Note) => {
     console.log(error);
   }
 };
-
+// export const checkLogin = async () => {
+//   const user = await currentUser();
+//   //if note already there update it fella
+//   if (!user) {
+//     return redirectToSignIn();
+//   }
+// };
 // export const setTime = async (todoId, date) => {
 //   try {
 //     const user = await currentUser();

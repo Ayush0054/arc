@@ -22,11 +22,11 @@ function CreateLayout({ children }: CreateLayoutProps) {
   }, []);
 
   return (
-    <div className="  flex justify-between  ">
+    <div className=" flex justify-between arc h-full ">
       {/* <Sidebar /> */}
-      <div className=" lg:container max-lg:mx-4 lg:w-[60vw] w-full ">
-        <div className=" flex justify-end gap-5 py-3  px-10 border-b-[1px] top-0 sticky bg-white">
-          <ModeToggle />
+      <div className=" lg:container max-lg:mx-4  w-full ">
+        <div className=" flex justify-end gap-5 py-3  px-10  top-0 sticky">
+          {/* <ModeToggle /> */}
           <UserButton afterSignOutUrl="/" />
         </div>
         {children}

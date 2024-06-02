@@ -65,11 +65,6 @@ model Notes {
 }
 
 //features
-// arc title -> give todos -> ask ai to breakdown it -> ai will make each week target with daily todo till due date
-
-// give arc title to ai -> ai will todos for weekwise and daywise with completeion date
-// ai generated blogs of your arc   can be shared publicly 
-//google calendar integrations
 
 //basic functionality
 // shareable link
@@ -83,11 +78,14 @@ model Notes {
 // create journal and notes
 
 //feature
-// check if person is free or not by checking his schedule
-// if completion date is given then it will divide task from present date to completion date 
-// task can be divide on week wise/day wise
+
 // daily office task can be added from meetings and it can be marked once done
 
 //things to brainstrom
 // arc todo notes feature
 // arc week feature with time completion
+
+// leaderboard of users who have completed arcs / started arcs
+//reminder for user , user can create it , delete it ,update it , google reminder is different
+// notifications for user  on reminder day they can dismiss it  ---- and  reminder for arc completion date
+//arc clone feature just like github

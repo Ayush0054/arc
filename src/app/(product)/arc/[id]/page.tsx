@@ -19,7 +19,7 @@ import {
 import EditGoal from "@/components/createGoal/edit-goal";
 import NotesModal from "@/components/notes/notes-modal";
 import CreateTaskModal from "@/components/arc/createTaskModal";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import DeleteDialog from "@/components/arc/delete-dialog";
 import { ArcCheckIsDone, deleteArcById } from "@/app/actions/arc/action";
 import { useRouter } from "next/navigation";
@@ -43,7 +43,7 @@ function Page({ params }: Params) {
   const [type, setType] = useState<string>();
   const [completionDate, setCompletionDate] = useState<Date>();
   const [tasks, setTasks] = useState([]);
-  const [notes, setNotes] = useState();
+
   const [isCompleted, setIsCompleted] = useState<Boolean>();
   const handleEditModal = async () => {
     setShowEditModal(true);
@@ -64,7 +64,7 @@ function Page({ params }: Params) {
       setType(response?.type);
       setCompletionDate(response?.completiontime);
       //@ts-ignore
-      setNotes(response?.Notes);
+      // setNotes(response?.Notes);
 
       //@ts-ignore
       setTasks(response?.todo);
@@ -75,7 +75,7 @@ function Page({ params }: Params) {
     }
   };
 
-  const user = currentUser;
+  // const user = currentUser;
 
   // const Session = Cookies.get("__session");
 
@@ -139,27 +139,29 @@ function Page({ params }: Params) {
     setIsCompleted(newIsCompleted);
 
     // Use newIsCompleted for the API call to ensure you're using the updated state
-    const response = await ArcCheckIsDone(params.id, newIsCompleted);
-    console.log(response);
+    await ArcCheckIsDone(params.id, newIsCompleted);
   };
   return (
-    <div className=" flex flex-col justify-center lg:container   mt-6">
+    <div className=" flex flex-col justify-center lg:container    mt-6">
       <div>
-        <div className=" flex justify-between items-center">
-          <h1 className=" text-3xl font-semibold text-start capitalize  ">
+        <div className=" flex justify-between items-center  ">
+          <h1 className=" text-3xl font-semibold text-start capitalize text-white  ">
             {title}
           </h1>
           <div className="lg:flex hidden items-center space-x-2">
+            <Label htmlFor="isDone" className=" text-white">
+              Mark it as Done
+            </Label>
             <Switch
               id="isDone"
+              className="  data-[state=unchecked]:bg-red-600"
               checked={isCompleted as boolean}
               onCheckedChange={handleArcCompleted}
             />
-            <Label htmlFor="isDone">Mark it as Done</Label>
           </div>
         </div>
         {/* <Input className=" border-none focus-visible:ring-0" /> */}
-        <h2 className=" text-xl  font-medium text-start mt-6 mb-6 text-gray-700">
+        <h2 className=" text-xl  font-medium text-start mt-6 mb-6 text-gray-500">
           {" "}
           {description}
         </h2>
@@ -175,7 +177,7 @@ function Page({ params }: Params) {
           </div>
           <div className=" lg:flex grid gap-3 max-lg:mt-4">
             <button className=" lg:block hidden" onClick={handleEditModal}>
-              <Pen />
+              <Pen color="white" />
             </button>
             <div className="flex lg:hidden items-center space-x-2">
               <Switch
@@ -198,7 +200,7 @@ function Page({ params }: Params) {
       <div className=" my-4 flex items-center gap-2">
         <h1></h1>
       </div>
-      <ScrollArea className="h-[600px]  rounded-md border p-4">
+      <div className="h-[600px] overflow-scroll   py-4">
         {tasks?.map((task) => (
           <div
             key={
@@ -224,7 +226,7 @@ function Page({ params }: Params) {
                   task?.isChecked
                 )
               }
-              className=" max-md:w-3  max-md:h-3"
+              className="  bg-[#1B1717]/90  data-[state=checked]:bg-[#1B1717]/90 border-none px-1 w-6 h-6 "
             />
 
             <label
@@ -232,9 +234,9 @@ function Page({ params }: Params) {
                 //@ts-ignore
                 task?.id
               }`} // This must match the Checkbox id
-              className={` lg:text-lg text-sm  font-medium font-nunito text-gray-600 leading-none ${
+              className={` lg:text-lg text-sm  font-medium font-nunito text-gray-50 leading-none ${
                 //@ts-ignore
-                task?.isChecked ? "line-through text-gray-400" : "text-gray-600"
+                task?.isChecked ? "line-through text-gray-600" : "text-gray-500"
               } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
             >
               {
@@ -246,7 +248,6 @@ function Page({ params }: Params) {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="secondary"
                     className={`hover:animate-hover-pop text-[12px] ${
                       //@ts-ignore
                       task?.isChecked ? "opacity-50 cursor-not-allowed" : ""
@@ -259,7 +260,10 @@ function Page({ params }: Params) {
                     Set Due date
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent side="top" className=" m-4 w-[300px]">
+                <PopoverContent
+                  side="top"
+                  className=" m-4 w-[300px] bg-[#111316]"
+                >
                   <DuedateModal
                     task={
                       //@ts-ignore
@@ -273,7 +277,7 @@ function Page({ params }: Params) {
             </div>
           </div>
         ))}
-      </ScrollArea>
+      </div>
 
       {/* <div className=" mt-8 flex justify-end">
         <Button disabled>Save</Button>

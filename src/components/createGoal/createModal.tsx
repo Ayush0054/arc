@@ -4,13 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import axios from "axios";
 
-import { toast } from "sonner";
 import { DatePicker } from "@/components/createGoal/datepicker";
 import { Textarea } from "@/components/ui/textarea";
-import { initialProfile } from "@/lib/createprofile";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import CreateTaskModal from "./createTaskModal";
@@ -23,13 +20,13 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
   const [arc, setArc] = useState();
   const [completionDate, setCompletionDate] = useState<Date>();
   const [showCreateTask, setShowCreateTask] = useState(false);
-  const create = async () => {
-    const response = await initialProfile();
-    console.log(response);
-  };
-  useEffect(() => {
-    create();
-  }, []);
+  // const create = async () => {
+  //   const response = await initialProfile();
+  //   console.log(response);
+  // };
+  // useEffect(() => {
+  //   create();
+  // }, []);
 
   const showCompletion = () => {
     setShow(true);
@@ -39,32 +36,32 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
   };
   // ai
   const createGoal = async () => {
-    const data = {
-      title: name,
-      description: description,
-      type: type,
-      completiontime: completionDate,
-      image: "",
-      status: "",
-    };
-    const currentTime = new Date().getTime();
-    if (completionDate && completionDate.getTime() < currentTime) {
-      toast.error("Completion date cannot be in the past.");
-      return;
-    }
+    // const data = {
+    //   title: name,
+    //   description: description,
+    //   type: type,
+    //   completiontime: completionDate,
+    //   image: "",
+    //   status: "",
+    // };
+    // const currentTime = new Date().getTime();
+    // if (completionDate && completionDate.getTime() < currentTime) {
+    //   toast.error("Completion date cannot be in the past.");
+    //   return;
+    // }
     try {
-      const response = await axios.post("/api/createarc", data);
-      console.log(response.data);
+      // const response = await axios.post("/api/createarc", data);
+      // console.log(response.data);
 
-      toast("Goal has been created", {
-        description: "Sunday, December 03, 2023 at 9:00 AM",
-        action: {
-          label: "view",
-          onClick: () => console.log("Undo"),
-        },
-      });
-      console.log(response.data);
-      setArc(response.data);
+      // toast("Goal has been created", {
+      //   description: "Sunday, December 03, 2023 at 9:00 AM",
+      //   action: {
+      //     label: "view",
+      //     onClick: () => console.log("Undo"),
+      //   },
+      // });
+      // console.log(response.data);
+      // setArc(response.data);
       setShowCreateTask(true);
     } catch (error) {
       console.error("Error creating goal:", error);
@@ -72,10 +69,10 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
   };
   return (
     <div
-      className="fixed inset-0 bg-gray-100 flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
+      className="fixed inset-0 bg-gray-900 backdrop-blur-xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
       id="my-modal"
     >
-      <div className="mt-12 border shadow-md h-[750px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl mx-8 gap-3 border-gray-300">
+      <div className="mt-12 border shadow-md h-[750px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-black/60 rounded-xl mx-8 gap-3 border-gray-800">
         <div className=" m-4 flex justify-end ">
           <button
             onClick={() => {
@@ -92,7 +89,7 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
               <div className=" grid gap-4">
                 <Label className="">Arc Title</Label>
                 <Input
-                  className="   focus-visible:ring-white   "
+                  className="     "
                   autoComplete="off"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -101,7 +98,7 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
               <div className="  grid  gap-4">
                 <Label className="">Description</Label>
                 <Textarea
-                  className="  focus-visible:ring-white    "
+                  className="    "
                   autoComplete="off"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -110,7 +107,7 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
               <div className="  grid  gap-4">
                 <Label className="">Type</Label>
                 <Input
-                  className="  focus-visible:ring-white  "
+                  className="  "
                   autoComplete="off"
                   value={type}
                   onChange={(e) => setType(e.target.value)}

@@ -20,12 +20,12 @@ function DuedateModal({
 }) {
   // const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [isLoading, setIsLoading] = useState(false);
-  console.log(date);
-  console.log(task);
+  // console.log(date);
+  // console.log(task);
   const scheduleTasks = async () => {
     setIsLoading(true);
     const getToken = await axios.get(`http://localhost:3000/api/get-token`);
-    console.log(getToken);
+    // console.log(getToken);
 
     try {
       const event = {
@@ -43,7 +43,7 @@ function DuedateModal({
           // timeZone: "America/Los_Angeles",
         },
       };
-      console.log(event);
+      // console.log(event);
 
       const response = await axios.post(
         "https://www.googleapis.com/calendar/v3/calendars/primary/events",
@@ -58,7 +58,7 @@ function DuedateModal({
         }
       );
 
-      console.log(response.data);
+      // console.log(response.data);
       const dateTimeString = response.data.start.dateTime;
 
       // Convert the string to a Date object
@@ -87,7 +87,7 @@ function DuedateModal({
   };
 
   return (
-    <div>
+    <div className=" flex flex-col items-center ">
       {/* <div className="  ">
         <TimePicker onChange={onChange} value={value} />
         <Calendar
@@ -104,7 +104,13 @@ function DuedateModal({
         <Button>set</Button>
       </div> */}
 
-      <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+      <Calendar
+        mode="single"
+        fromDate={new Date()}
+        selected={date}
+        onSelect={setDate}
+        initialFocus
+      />
       <div className="p-3 border-t border-border">
         <TimePickerDemo setDate={setDate} date={date} />
       </div>

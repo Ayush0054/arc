@@ -5,7 +5,7 @@
 
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirectToSignIn } from "@clerk/nextjs";
 const prisma = new PrismaClient();
 

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 
 import { Trash2, Pen, Stars } from "lucide-react";
 
-import "@blocknote/core/fonts/inter.css";
 import { Input } from "@/components/ui/input";
 
 import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+// import { useAuth, useUser } from "@clerk/nextjs";
 
 function CreateTaskModal({
   arcId,
@@ -25,6 +26,7 @@ function CreateTaskModal({
 }) {
   const { push } = useRouter();
   const router = useRouter();
+  // const { isLoaded, isSignedIn, user } = useUser();
   //   const [title, setTitle] = useState<string>();
   //   const [description, setDescription] = useState<string>();
   //   const [type, setType] = useState<string>();
@@ -41,7 +43,7 @@ function CreateTaskModal({
   const [editIndex, setEditIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [newTask, setNewTask] = useState("");
-
+  const [arc, setArc] = useState();
   const CreateTodosFromAi = async () => {
     setIsLoading(true);
     let temp = messages;
@@ -51,10 +53,10 @@ function CreateTaskModal({
     });
     setMessages(temp);
     setTheInput("");
-    console.log("Calling OpenAI...");
-    console.log(name, description, type, completionDate);
+    // console.log("Calling OpenAI...");
+    // console.log(name, description, type, completionDate);
 
-    console.log(messages[0].content);
+    // console.log(messages[0].content);
 
     const response = await fetch("/api/ai", {
       method: "POST",
@@ -67,9 +69,11 @@ function CreateTaskModal({
 
     const data = await response.json();
     const { output } = data;
-    console.log("OpenAI replied...", output.content);
+    // console.log("OpenAI replied...", output.content);
     const regex = /"\d+\..+?"/g;
     const matches = output.content.match(regex);
+    // console.log(matches);
+
     //@ts-ignore
     const newTasks = matches ? matches.map((match) => match.slice(1, -1)) : [];
 
@@ -78,7 +82,7 @@ function CreateTaskModal({
     const newTasks2 = newTasks.map((task) =>
       task.replace(regexToRemoveNumbering, "")
     );
-    console.log(newTasks2);
+    // console.log(newTasks2);
 
     setMessages((prevMessages) => [...prevMessages, output]);
     const updatedTasks = [...tasks, ...newTasks2];
@@ -123,21 +127,96 @@ function CreateTaskModal({
   //@ts-ignore
   const deleteTask = (index) => {
     const updatedTasks = tasks.filter((_, taskIndex) => taskIndex !== index);
-    // localStorage.setItem(`task ${params.arcid}`, JSON.stringify(updatedTasks));
+
     setTasks(updatedTasks);
   };
-  const createArcTodos = async () => {
-    const data = {
-      arcId: arcId,
-      todos: tasks,
+
+  //   const data = {
+  //     arcId: arcId,
+  //     todos: tasks,
+  //   };
+  //   try {
+  //     const response = await axios.post("/api/todo", data);
+  //     console.log(response);
+  //     localStorage.removeItem(`task ${arc?.id}`);
+  //     router.push(`/arc/${arc?.id}`);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const createGoal = async () => {
+  //   const data = {
+  //     title: name,
+  //     description: description,
+  //     type: type,
+  //     completiontime: completionDate,
+  //     image: "",
+  //     status: "",
+  //   };
+  //   const currentTime = new Date().getTime();
+  //   if (completionDate && completionDate.getTime() < currentTime) {
+  //     toast.error("Completion date cannot be in the past.");
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axios.post("/api/createarc", data);
+  //     console.log(response.data);
+
+  //     toast("Goal has been created", {
+  //       description: "Sunday, December 03, 2023 at 9:00 AM",
+  //       action: {
+  //         label: "view",
+  //         onClick: () => console.log("Undo"),
+  //       },
+  //     });
+  //     console.log(response.data);
+  //     setArc(response.data);
+  //     // setShowCreateTask(true);
+  //   } catch (error) {
+  //     console.error("Error creating goal:", error);
+  //   }
+  // };
+  const createGoalAndTodos = async () => {
+    const goalData = {
+      title: name,
+      description: description,
+      type: type,
+      completiontime: completionDate,
+      image: "",
+      status: "",
     };
+    // console.log(goalData);
+
+    const currentTime = new Date().getTime();
+    if (completionDate && completionDate.getTime() < currentTime) {
+      toast.error("Completion date cannot be in the past.");
+      return;
+    }
+
     try {
-      const response = await axios.post("/api/todo", data);
-      console.log(response);
-      localStorage.removeItem(`task ${arcId}`);
-      router.push(`/arc/${arcId}`);
+      // Create goal
+      const goalResponse = await axios.post("/api/createarc", goalData);
+      // console.log(goalResponse.data);
+
+      const newArcId = goalResponse.data.id;
+      setArc(goalResponse.data);
+
+      // Data for creating todos
+      const todosData = {
+        arcId: newArcId,
+        todos: tasks,
+      };
+
+      // Create todos for the new goal
+      await axios.post("/api/todo", todosData);
+      toast("Arc and tasks has been created", {
+        description: "Goal creation success message",
+      });
+      // console.log(todosResponse);
+      localStorage.removeItem(`task ${newArcId}`);
+      router.push(`/arc/${newArcId}`);
     } catch (error) {
-      console.log(error);
+      console.error("Error in creating goal or todos:", error);
     }
   };
   return (
@@ -163,7 +242,7 @@ function CreateTaskModal({
           Create Task using Ai <Stars />
         </Button>
       </div>
-      <div className="overflow-y-scroll h-[350px] px-10 py-2 bg-slate-50">
+      <div className="overflow-y-scroll h-[350px] px-10 py-2 ">
         {tasks?.map((item, index) => (
           <div
             key={index}
@@ -203,7 +282,11 @@ function CreateTaskModal({
       </div>
       <div className=" flex justify-end mt-20 mx-10 ">
         {tasks.length > 0 && (
-          <Button disabled={isLoading} onClick={createArcTodos} className="">
+          <Button
+            disabled={isLoading}
+            onClick={createGoalAndTodos}
+            className=""
+          >
             Create Task
           </Button>
         )}

@@ -28,12 +28,12 @@ function ArcPost({ arc }: { arc: any }) {
           </Badge>
 
           {arc?.todo[0]?.todo && (
-            <div className="flex items-center space-x-2 shadow-inner p-4">
+            <div className="flex items-center space-x-2 shadow-inner p-4 bg-gray-950">
               <label
                 htmlFor="terms"
                 className="text-base font-medium text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {arc?.todo[0]?.todo}
+                1. {arc?.todo[0]?.todo}
               </label>
             </div>
           )}

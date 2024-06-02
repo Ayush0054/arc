@@ -4,9 +4,9 @@ import {
   getArcById,
   // updateTodo,
 } from "@/app/actions/action";
-import React, { FormEvent, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { Pen, Stars, Trash2, X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -31,21 +31,21 @@ function EditGoal({
 }) {
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
-  const [editValue, setEditValue] = useState("");
+  // const [editIndex, setEditIndex] = useState(null);
+  // const [editValue, setEditValue] = useState("");
   const [newTask, setNewTask] = useState("");
 
   const getGoalDetails = async () => {
     try {
       const response = await getArcById(arcId);
 
-      console.log(response);
+      // console.log(response);
       if (!response?.todo) {
         router.push(`/createarc/todo/${arcId}`);
         return;
       }
 
-      console.log(response.todo);
+      // console.log(response.todo);
       //@ts-ignore
       setTasks(response?.todo);
     } catch (error) {
@@ -57,14 +57,14 @@ function EditGoal({
     getGoalDetails();
   }, []);
 
-  const startEditing = (index: any) => {
-    setEditIndex(index);
-    setEditValue(tasks[index]);
-  };
+  // const startEditing = (index: any) => {
+  //   setEditIndex(index);
+  //   setEditValue(tasks[index]);
+  // };
 
-  const handleEditChange = (e: any) => {
-    setEditValue(e.target.value);
-  };
+  // const handleEditChange = (e: any) => {
+  //   setEditValue(e.target.value);
+  // };
 
   const handleNewTaskChange = (e: any) => {
     setNewTask(e.target.value);
@@ -83,17 +83,17 @@ function EditGoal({
     }
   };
   const deleteTask = async (id: any) => {
-    console.log(id);
+    // console.log(id);
     //@ts-ignore
     const updatedTasks = tasks.filter((task) => task.id !== id);
-    console.log(updatedTasks);
+    // console.log(updatedTasks);
 
     setTasks(updatedTasks);
     await deleteTodoByID(id, arcId);
   };
   return (
     <div
-      className="fixed inset-0 bg-gray-100 flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
+      className="fixed inset-0 bg-gray-900 backdrop-blur-2xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
       id="my-modal"
     >
       <motion.div
@@ -106,7 +106,7 @@ function EditGoal({
           damping: 20,
         }}
       >
-        <div className="mt-12 border shadow-md h-[700px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl lg:mx-8 mx-4 gap-3 border-gray-300">
+        <div className="mt-12  shadow-md h-[700px] border-gray-800 border   max-h-[1000px] lg:w-[600px] flex flex-col bg-black/60 rounded-xl lg:mx-8 mx-4 gap-3">
           {" "}
           <div className=" m-4 flex justify-end ">
             <button
@@ -115,14 +115,14 @@ function EditGoal({
                 getGoalDetail();
               }}
             >
-              <X />
+              <X color="gray" />
             </button>
           </div>
           <div className=" flex flex-col justify-between   ">
             <div className="lg:mx-10 mx-4 flex flex-col items-center  mb-10 ">
               <div className=" mb-4 flex items-center gap-2 lg:w-[500px]">
                 <Input
-                  className=" w-full"
+                  className=" w-full bg-black/20 border-gray-900 text-gray-100"
                   type="text"
                   placeholder="Add new task"
                   value={newTask}
@@ -145,7 +145,7 @@ function EditGoal({
                       //@ts-ignore
                       task?.id
                     }`}
-                    className="lg:text-lg text-sm font-medium font-nunito text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="lg:text-lg text-sm font-medium font-nunito text-gray-100 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {
                       //@ts-ignore
@@ -161,7 +161,7 @@ function EditGoal({
                       }
                       className="ml-auto"
                     >
-                      <Trash2 />
+                      <Trash2 color="gray" />
                     </button>
                   </div>
                 </div>

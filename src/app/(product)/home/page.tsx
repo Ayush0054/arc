@@ -4,6 +4,7 @@ import CreateModal from "@/components/createGoal/createModal";
 import ArcPost from "@/components/home/arc-post";
 
 import { Button } from "@/components/ui/button";
+import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -11,6 +12,10 @@ import React, { useEffect, useState } from "react";
 function Page() {
   const [showCreate, setShowCreate] = useState(false);
   const handleCreate = () => {
+    // const user = currentUser();
+    // if (!user) {
+    //   return redirectToSignIn();
+    // }
     setShowCreate(true);
   };
   const [arcs, setArcs] = useState([]);

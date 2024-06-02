@@ -1,26 +1,35 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
-function Navbar() {
+interface NavbarProps {
+  setAuthModal: (open: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ setAuthModal }) => {
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+
   return (
-    <div className=" bg-white  shadow-sm flex justify-evenly py-2 top-0 sticky z-10 items-center">
-      <h1 className=" text-5xl font-semibold">Arc</h1>
-      <div className=" flex justify-evenly gap-5 text-gray-500">
-        <Link href="/">Home</Link>
-        <Link href="/">Explore</Link>
-        <Link href="/">Notifications</Link>
-        <Link href="/">Messages</Link>
-        <Link href="/">Create</Link>
-      </div>
-      <div className=" flex gap-4 ">
-        <Button className=" text-green-500 bg-white hover:bg-white">
-          Sign in
-        </Button>
-        <Button className=" text-white">Get Started</Button>
+    <div className=" -mt-[250px] shadow-sm py-2">
+      <div className="flex justify-between items-center">
+        <h1 className="text-5xl font-semibold">Arc</h1>
+
+        <div className="flex gap-4">
+          <Button
+            onClick={() =>
+              isSignedIn ? router.push("/home") : setAuthModal(true)
+            }
+            className="bg-[#0e1d24] hover:bg-[#0e1d24] rounded-2xl"
+          >
+            Get Started
+          </Button>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;

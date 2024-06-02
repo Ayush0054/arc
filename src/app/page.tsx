@@ -1,15 +1,22 @@
+"use client";
+import SignInModal from "@/components/auth/sign-in-modal";
 import Feature from "@/components/landing-page/feature";
 import Feature2 from "@/components/landing-page/feature2";
 import Hero from "@/components/landing-page/hero";
 import Navbar from "@/components/landing-page/navbar";
+import { useState } from "react";
 
 export default function Home() {
+  const [authModal, setAuthModal] = useState(false);
   return (
-    <div>
-      <Navbar />
+    <div className=" mx-20">
+      <div className="w-[285px] h-[250px] bg-blue-600 rounded-full blur-[200px]"></div>
+
+      <Navbar setAuthModal={setAuthModal} />
       <Hero />
-      <Feature />
-      <Feature2 />
+      {/* <Feature />
+      <Feature2 /> */}
+      {authModal && <SignInModal setAuthModal={setAuthModal} />}
     </div>
   );
 }

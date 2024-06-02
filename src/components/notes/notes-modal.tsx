@@ -9,7 +9,7 @@ import "@blocknote/core/fonts/inter.css";
 import { motion } from "framer-motion";
 import { BlockNoteView, defaultColorScheme } from "@blocknote/react";
 import "@blocknote/react/style.css";
-import { X } from "lucide-react";
+import { Copy, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { getNotes, saveNotes } from "@/app/actions/action";
 
@@ -24,14 +24,19 @@ function NotesModal({
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | "loading"
   >("loading");
-
+  // console.log(initialContent);
   // Combined useEffect for initial setup
   useEffect(() => {
     const fetchNotes = async () => {
-      const res = await getNotes(arcid);
-      console.log(res);
-      // Assuming res contains the notes in the desired format
-      setInitialContent(res[0]?.content || []);
+      try {
+        const res = await getNotes(arcid);
+        // console.log(res);
+        // Assuming res contains the notes in the desired format
+        setInitialContent(res[0]?.content || []);
+      } catch (error) {
+        console.error("Error fetching notes:", error);
+        setInitialContent([]);
+      }
     };
 
     fetchNotes();
@@ -41,7 +46,17 @@ function NotesModal({
     if (initialContent === "loading" || initialContent === undefined) {
       return undefined;
     }
-    return BlockNoteEditor.create({ initialContent });
+    return BlockNoteEditor.create({
+      initialContent:
+        initialContent.length > 0
+          ? initialContent
+          : [
+              {
+                type: "paragraph",
+                content: "Start typing your notes here...",
+              },
+            ],
+    });
   }, [initialContent]);
 
   const save = useCallback(async () => {
@@ -49,7 +64,7 @@ function NotesModal({
       //@ts-ignore
       const response = await saveNotes(arcid, editor.document);
       // Handle response and possibly update state to reflect changes
-      console.log("Notes saved", response);
+      // console.log("Notes saved", response);
       // Optionally, fetch notes again to ensure UI is up-to-date
     }
   }, [arcid, editor]);
@@ -60,7 +75,7 @@ function NotesModal({
 
   return (
     <div
-      className="fixed inset-0 bg-gray-100 flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
+      className="fixed inset-0 bg-gray-900 backdrop-blur-2xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
       id="my-modal"
     >
       <motion.div
@@ -69,19 +84,20 @@ function NotesModal({
         exit={{ y: 300, opacity: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
-        <div className="min-h-[90vh] min-w-[90vw] lg:m-12 m-4 border shadow-md flex flex-col bg-white rounded-xl gap-3 border-gray-300">
-          <Card className="min-h-[90vh] min-w-[90vw]">
+        <div className="min-h-[90vh] min-w-[90vw] lg:m-12 m-4  shadow-md flex flex-col  rounded-xl gap-3 ">
+          <Card className="min-h-[90vh] min-w-[90vw] bg-[#111316]">
             <div className="m-10 flex justify-end gap-3">
               <Button onClick={save}>Save</Button>
               <button onClick={() => setShowNotes(false)}>
-                <X />
+                <X color="gray" />
               </button>
             </div>
             <BlockNoteView
+              data-theming-css-variables-demo
               className="h-full pt-8"
               editor={editor}
               //@ts-ignore
-              theme={defaultColorScheme}
+              // theme={defaultColorScheme}
               onChange={() => setBlocks(editor.document)}
               data-theming-css-demo
             />

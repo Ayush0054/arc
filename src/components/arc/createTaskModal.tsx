@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 function CreateTaskModal({
   arcId,
@@ -25,9 +24,7 @@ function CreateTaskModal({
   setShowCreateTask: any;
   completionDate: any;
 }) {
-  const router = useRouter();
-
-  const [theInput, setTheInput] = useState("");
+  // const [theInput, setTheInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -48,11 +45,11 @@ function CreateTaskModal({
       content: `title for task : ${title} description for task : ${description}  type of task : ${type} today date : ${new Date()}  completion date : ${completionDate} `,
     });
     setMessages(temp);
-    setTheInput("");
-    console.log("Calling OpenAI...");
-    console.log(title, description, type, completionDate);
 
-    console.log(messages[0].content);
+    // console.log("Calling OpenAI...");
+    // console.log(title, description, type, completionDate);
+
+    // console.log(messages[0].content);
 
     const response = await fetch("/api/ai", {
       method: "POST",
@@ -65,7 +62,7 @@ function CreateTaskModal({
 
     const data = await response.json();
     const { output } = data;
-    console.log("OpenAI replied...", output.content);
+    // console.log("OpenAI replied...", output.content);
     const regex = /"\d+\..+?"/g;
     const matches = output.content.match(regex);
     //@ts-ignore
@@ -76,7 +73,7 @@ function CreateTaskModal({
     const newTasks2 = newTasks.map((task) =>
       task.replace(regexToRemoveNumbering, "")
     );
-    console.log(newTasks2);
+    // console.log(newTasks2);
 
     setMessages((prevMessages) => [...prevMessages, output]);
     const updatedTasks = [...tasks, ...newTasks2];
@@ -130,20 +127,21 @@ function CreateTaskModal({
       todos: tasks,
     };
     try {
-      const response = await axios.post("/api/todo", data);
-      console.log(response);
-      localStorage.removeItem(`task ${arcId}`);
-      router.push(`/arc/${arcId}`);
+      await axios.post("/api/todo", data);
+      // console.log(response);
+      // localStorage.removeItem(`task ${arcId}`);
+      // router.push(`/arc/${arcId}`);
+      setShowCreateTask(false);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div
-      className="fixed inset-0 bg-gray-100 flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
+      className="fixed inset-0 bg-gray-900 backdrop-blur-xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
       id="my-modal"
     >
-      <div className="mt-12 border shadow-md h-[750px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-white rounded-xl mx-8 gap-3 border-gray-300">
+      <div className="mt-12 border shadow-md h-[750px]   max-h-[1000px] lg:w-[600px] flex flex-col bg-black/60 rounded-xl mx-8 gap-3 border-gray-800">
         <div className=" m-4 flex justify-end ">
           <button
             onClick={() => {
@@ -175,7 +173,7 @@ function CreateTaskModal({
               Create Task using Ai <Stars />
             </Button>
           </div>
-          <div className="overflow-y-scroll h-[350px] px-10 py-2 bg-slate-50">
+          <div className="overflow-y-scroll h-[350px] px-10 py-2 ">
             {tasks?.map((item, index) => (
               <div
                 key={index}
