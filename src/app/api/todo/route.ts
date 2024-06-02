@@ -32,26 +32,26 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Error creating todo" }, { status: 500 });
   }
 }
-export async function GET() {
-  const user = await currentUser();
+// export async function GET() {
+//   const user = await currentUser();
 
-  if (!user) {
-    return redirectToSignIn();
-  }
+//   if (!user) {
+//     return redirectToSignIn();
+//   }
 
-  try {
-    const todos = await prisma.arcTodos.findMany({
-      include: {
-        arc: true, // Assuming you want to include details of the Arc
-      },
-    });
+//   try {
+//     const todos = await prisma.arcTodos.findMany({
+//       include: {
+//         arc: true, // Assuming you want to include details of the Arc
+//       },
+//     });
 
-    return NextResponse.json(todos, { status: 200 });
-  } catch (error) {
-    console.error("Request error", error);
-    return NextResponse.json(
-      { error: "Error retrieving todos" },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json(todos, { status: 200 });
+//   } catch (error) {
+//     console.error("Request error", error);
+//     return NextResponse.json(
+//       { error: "Error retrieving todos" },
+//       { status: 500 }
+//     );
+//   }
+// }

@@ -287,10 +287,10 @@ function Page({ params }: Params) {
         <EditGoal
           getGoalDetail={getGoalDetails}
           arcId={params.id}
-          name={title}
-          description={description}
-          type={type}
-          completionDate={completionDate}
+          // name={title}
+          // description={description}
+          // type={type}
+          // completionDate={completionDate}
           setShowEditModal={setShowEditModal}
         />
       )}

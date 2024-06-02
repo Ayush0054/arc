@@ -15,19 +15,19 @@ function EditGoal({
   getGoalDetail,
   setShowEditModal,
   arcId,
-  name,
-  description,
-  type,
-  completionDate,
-}: {
+}: // name,
+// description,
+// type,
+// completionDate,
+{
   // onClose: () => void;
   getGoalDetail: any;
   setShowEditModal: any;
   arcId: any;
-  name: any;
-  description: any;
-  type: any;
-  completionDate: any;
+  // name: any;
+  // description: any;
+  // type: any;
+  // completionDate: any;
 }) {
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
