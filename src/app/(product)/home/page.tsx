@@ -4,7 +4,6 @@ import CreateModal from "@/components/createGoal/createModal";
 import ArcPost from "@/components/home/arc-post";
 
 import { Button } from "@/components/ui/button";
-import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";

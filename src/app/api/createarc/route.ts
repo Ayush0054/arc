@@ -1,15 +1,10 @@
-//get
-//post
-//update
-//delete
-
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
 import { redirectToSignIn } from "@clerk/nextjs";
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
+  const prisma = new PrismaClient();
   try {
     const user = await currentUser();
     const body = await req.json();
