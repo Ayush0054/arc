@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
-import { Inter } from "next/font/google";
+// import { Inter as FontSans } from "next/font/google";
+
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-const inter = Inter({ subsets: ["latin"] });
+// export const fontSans = FontSans({
+//   subsets: ["latin"],
+//   variable: "--font-sans",
+// });
 
 export const metadata: Metadata = {
   title: "Arc",
