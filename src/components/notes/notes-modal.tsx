@@ -11,7 +11,7 @@ import { BlockNoteView, defaultColorScheme } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import { Copy, X } from "lucide-react";
 import { Button } from "../ui/button";
-import { getNotes, saveNotes } from "@/app/actions/action";
+import { getNotes, saveNotes } from "@/app/action";
 
 function NotesModal({
   setShowNotes,

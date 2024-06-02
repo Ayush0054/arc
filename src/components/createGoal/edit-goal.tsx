@@ -3,7 +3,7 @@ import {
   deleteTodoByID,
   getArcById,
   // updateTodo,
-} from "@/app/actions/action";
+} from "@/app/action";
 import React, { useLayoutEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Trash2, X } from "lucide-react";

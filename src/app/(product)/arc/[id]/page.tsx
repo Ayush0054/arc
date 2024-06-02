@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Pen } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { checkTodo, getArcById, unCheckTodo } from "../../../actions/action";
+import { checkTodo, getArcById, unCheckTodo } from "../../../action";
 
 import { Badge } from "@/components/ui/badge";
 import DuedateModal from "@/components/arc/duedate-modal";
@@ -20,7 +20,7 @@ import NotesModal from "@/components/notes/notes-modal";
 import CreateTaskModal from "@/components/arc/createTaskModal";
 
 import DeleteDialog from "@/components/arc/delete-dialog";
-import { ArcCheckIsDone, deleteArcById } from "@/app/actions/arc/action";
+import { ArcCheckIsDone, deleteArcById } from "@/app/action";
 import { useRouter } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";

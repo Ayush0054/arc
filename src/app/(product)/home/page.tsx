@@ -1,5 +1,5 @@
 "use client";
-import { getArcByProfileId } from "@/app/actions/action";
+import { getArcByProfileId } from "@/app/action";
 import CreateModal from "@/components/createGoal/createModal";
 import ArcPost from "@/components/home/arc-post";
 

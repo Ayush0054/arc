@@ -211,6 +211,34 @@ export const saveNotes = async (arcid: any, notes: Note) => {
     console.log(error);
   }
 };
+
+export const deleteArcById = async (id: any) => {
+  const goals = await prisma.arc.deleteMany({
+    where: {
+      id: id,
+    },
+  });
+  console.log(goals);
+
+  revalidatePath(`/arc/${id}`);
+  return goals;
+};
+
+export const ArcCheckIsDone = async (id: any, isCompletedBool: any) => {
+  const goals = await prisma.arc.updateMany({
+    where: {
+      id: id,
+    },
+    data: {
+      isCompleted: isCompletedBool,
+    },
+  });
+  console.log(goals);
+
+  revalidatePath(`/arc/${id}`);
+  return goals;
+};
+
 // export const checkLogin = async () => {
 //   const user = await currentUser();
 //   //if note already there update it fella
