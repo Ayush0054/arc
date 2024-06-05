@@ -38,7 +38,7 @@ You have the following rights regarding your personal information:
 - **Deletion**: You have the right to request the deletion of your personal information.
 - **Objection**: You have the right to object to the processing of your personal information.
 
-To exercise any of these rights, please contact us at [Your Contact Information].
+To exercise any of these rights, please contact us at ayush5april@gmail.com.
 
 ## Changes to This Privacy Policy
 
