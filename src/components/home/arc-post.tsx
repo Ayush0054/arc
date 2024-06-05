@@ -8,9 +8,11 @@ function ArcPost({ arc }: { arc: any }) {
   return (
     <div>
       <div className=" group relative  ">
-        <Card className="p-6 w-[400px]  shadow-lg font-nunito rounded-[16px] transition duration-300 ease-in-out group-hover:blur-sm  ">
-          <div className=" flex justify-between items-center">
-            <CardTitle className="  mb-4 text-2xl">{arc?.title}</CardTitle>
+        <Card className="p-6 lg:w-[400px] w-[350px] shadow-lg font-nunito rounded-[16px] transition duration-300 ease-in-out group-hover:blur-sm  ">
+          <div className=" flex justify-between lg:items-center max-lg:flex-col max-lg:mb-2">
+            <CardTitle className="  lg:mb-4 mb-2 text-2xl">
+              {arc?.title}
+            </CardTitle>
             <div>
               {arc?.isCompleted === false ? (
                 <Badge variant="destructive">Not Done</Badge>
@@ -23,7 +25,7 @@ function ArcPost({ arc }: { arc: any }) {
             {arc?.description}
           </CardDescription>
 
-          <Badge variant="outline" className=" rounded-[8px] my-4 ">
+          <Badge variant="secondary" className=" rounded-[8px] my-4 ">
             {arc?.type}
           </Badge>
 

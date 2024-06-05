@@ -59,7 +59,7 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
               <div className="grid gap-4">
                 <Label className="">Description</Label>
                 <Textarea
-                  className=""
+                  className=" resize-none h-[140px] "
                   autoComplete="off"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

@@ -1,12 +1,14 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { render } from "@react-email/render";
 const prisma = new PrismaClient();
 import { currentUser } from "@clerk/nextjs";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { Resend } from "resend";
 
-export const getArcById = async (id: any) => {
-  const goals = await prisma.arc.findUnique({
+export const getArcById = async (id: string) => {
+  const arc = await prisma.arc.findUnique({
     where: {
       id: id,
     },
@@ -14,38 +16,32 @@ export const getArcById = async (id: any) => {
       profile: {
         select: {
           name: true,
-          // id: true,
         },
       },
       todo: {
         select: {
           id: true,
-          arcId: true,
           todo: true,
           isChecked: true,
-          IsCheckedTime: true,
+          dateTime: true,
         },
-        orderBy: [
-          {
-            dateTime: "asc", // change to 'desc' if needed
-          },
-          {
-            id: "asc", // change to 'desc' if needed
-          },
-        ],
+        orderBy: {
+          dateTime: "asc",
+        },
+        take: 100, // limit results for pagination
       },
       Notes: {
         select: {
-          arcId: true,
           id: true,
           content: true,
         },
+        take: 100, // limit results for pagination
       },
     },
   });
 
   revalidatePath(`/createarc/todo/${id}`);
-  return goals;
+  return arc;
 };
 
 export const deleteTodoByID = async (id: any, arcId: any) => {
@@ -81,6 +77,7 @@ export const getArcByProfileId = async () => {
     if (!user) {
       return redirectToSignIn();
     }
+
     const profile = await prisma.profile.findUnique({
       where: {
         userId: user.id,
@@ -89,7 +86,6 @@ export const getArcByProfileId = async () => {
         arcs: {
           select: {
             id: true,
-            todo: true,
             title: true,
             description: true,
             completiontime: true,
@@ -98,13 +94,27 @@ export const getArcByProfileId = async () => {
             image: true,
             status: true,
             isCompleted: true,
+            todo: {
+              select: {
+                id: true,
+                todo: true,
+                isChecked: true,
+                dateTime: true,
+              },
+              orderBy: {
+                dateTime: "asc",
+              },
+              take: 100, // limit results for pagination
+            },
           },
         },
       },
     });
+
     return profile;
   } catch (error) {
     console.error("Request error", error);
+    throw new Error("Failed to fetch profile with arcs"); // Throw an error to ensure the caller is aware
   }
 };
 
@@ -238,6 +248,26 @@ export const ArcCheckIsDone = async (id: any, isCompletedBool: any) => {
   revalidatePath(`/arc/${id}`);
   return goals;
 };
+
+//login
+
+// export const send = async (email: any) => {
+//   console.log(email);
+
+//   const resend = new Resend(process.env.RESEND_API_KEY);
+
+//   const { data, error } = await resend.emails.send({
+//     from: "ayush5april@gmail.com ",
+//     to: [email],
+//     subject: "Hello World",
+
+//     react: WelcomeEmailTemplate({ firstName: "John" }),
+//   });
+//   if (error) {
+//     return Response.json({ error }, { status: 500 });
+//   }
+//   console.log(data);
+// };
 
 // export const checkLogin = async () => {
 //   const user = await currentUser();

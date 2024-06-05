@@ -51,6 +51,7 @@ model ArcTodos {
   Reminder      DateTime?
 
   @@index([arcId])
+  @@index([dateTime]) // Add this line
 }
 
 //todoist integration

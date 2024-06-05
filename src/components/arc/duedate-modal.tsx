@@ -24,7 +24,7 @@ function DuedateModal({
   // console.log(task);
   const scheduleTasks = async () => {
     setIsLoading(true);
-    const getToken = await axios.get(`http://localhost:3000/api/get-token`);
+    const getToken = await axios.get(`/api/get-token`);
     // console.log(getToken);
 
     try {
