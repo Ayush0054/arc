@@ -68,11 +68,13 @@ model Notes {
 //features
 
 //basic functionality
-// shareable link
-//invite
+//landing page complete
 //email
-//blogs
-
+//reminder
+//caching
+//rate limiting
+//animation for creating task
+//speed up responses
 //advance
 //todist integration 
 //reminders feature -> put thing here , where you can  set reminder for any task in todoist . or add reminderss

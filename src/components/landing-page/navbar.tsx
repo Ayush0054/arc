@@ -4,6 +4,8 @@ import { Button } from "../ui/button";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import logo from "@/assets/Arc.svg";
+import Image from "next/image";
 interface NavbarProps {
   setAuthModal: (open: boolean) => void;
 }
@@ -35,7 +37,9 @@ const Navbar: React.FC<NavbarProps> = ({ setAuthModal }) => {
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
           <div className="flex justify-between items-center">
-            <h1 className="text-5xl font-semibold">Arc</h1>
+            <div className=" flex gap-2 items-center">
+              <Image src={logo} className=" h-10 w-16" alt="" />
+            </div>
 
             <div className="flex gap-4">
               <Button
