@@ -21,7 +21,7 @@ export function DatePicker({
 }) {
   console.log(completionDate);
   const scheduleTasks = async () => {
-    const getToken = await axios.get(`http://localhost:3000/api/get-token`);
+    const getToken = await axios.get(`/api/get-token`);
     console.log(getToken);
     try {
       // const incompleteTasks = tasks.filter((task) => !task.isChecked);
