@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ setAuthModal }) => {
     show: { opacity: 1, y: 0, transition: { type: "spring" } },
   };
   return (
-    <div className=" -mt-[250px] shadow-sm py-2">
+    <div className=" -mt-[250px] shadow-sm py-2 mx-20">
       <motion.div
         initial="hidden"
         animate="show"

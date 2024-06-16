@@ -1,11 +1,10 @@
 import React from "react";
 import heroImage from "@/assets/hero.png";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
+
 import Image from "next/image";
-import { Badge } from "../ui/badge";
+
 import { motion } from "framer-motion";
+import { Badge } from "../ui/badge";
 
 function Hero() {
   const FADE_DOWN_ANIMATION_VARIANTS = {
@@ -15,6 +14,7 @@ function Hero() {
   return (
     <motion.div
       initial="hidden"
+      className="mx-20"
       animate="show"
       viewport={{ once: true }}
       variants={{
@@ -31,7 +31,10 @@ function Hero() {
           className="text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <div className="text-center text-red-900/opacity-20 text-5xl font-medium text-white/80 ">
+          <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10 text-2xl px-4 font-bold">
+            Alpha version
+          </Badge>
+          <div className="text-center text-red-900/opacity-20 text-7xl font-medium text-white/60 bg-gradient-to-r from-[#203368] via-[#f55e23] to-[#f7d690] bg-[length:var(--bg-size)_100%] bg-clip-text ">
             Boost your productivity with Arc
           </div>
         </motion.h1>
@@ -41,10 +44,9 @@ function Hero() {
           className=" text-center md:text-2xl"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          Animation Preview
           <Image
             src={heroImage}
-            className="  -mt-[300px] relative shadow-xl"
+            className="  -mt-[300px] lg:w-[1200px] relative shadow-xl"
             alt=""
           />
         </motion.div>

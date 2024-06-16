@@ -7,6 +7,7 @@ import "./globals.css";
 import { cn } from "@/app/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "./lib/theme-provider";
 // export const fontSans = FontSans({
 //   subsets: ["latin"],
 //   variable: "--font-sans",
@@ -31,7 +32,14 @@ export default function RootLayout({
             GeistSans.variable
           )}
         >
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
           <Toaster />
         </body>
       </html>

@@ -29,7 +29,7 @@ function FeatureCard() {
     <Card className=" p-8 w-[450px] text-start shadow-md">
       <FaCheckSquare size={44} className="mb-20" />
       <h1 className=" text-2xl font-semibold  mb-8">Predictive Insights</h1>
-      <h1 className=" text-lg text-gray-700 ">
+      <h1 className=" text-lg text-gray-400 ">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend nullam
         consectetur placerat pellentesque ut massa volutpat at. Diam pretium
         orci dui sagittis.
@@ -40,16 +40,16 @@ function FeatureCard() {
 function FeatureCard2() {
   return (
     <div className="relative max-lg:mt-8">
-      <div className="absolute -inset-2 rounded-lg bg-gradient-to-r from-sky-300 via-rose-300 to-lime-300 opacity-75 blur"></div>
+      <div className="absolute -inset-2 rounded-lg bg-gradient-to-r from-sky-800 via-rose-800 to-lime-800 opacity-75 blur"></div>
       <Card className="relative p-8 w-[450px] text-start shadow-md">
         <FaCheckSquare size={44} className="mb-20" />
         <h1 className=" text-2xl font-semibold  mb-8">Predictive Insights</h1>
-        <h1 className=" text-lg text-gray-700 mb-8 ">
+        <h1 className=" text-lg text-gray-400 mb-8 ">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend
           nullam consectetur placerat pellentesque ut massa volutpat at. Diam
           pretium orci dui sagittis.
         </h1>
-        <h1 className=" text-lg text-gray-700 ">
+        <h1 className=" text-lg text-gray-400 ">
           Eleifend nullam consectetur placerat pelle tesque ut massa volutpat
           bonur los.
         </h1>

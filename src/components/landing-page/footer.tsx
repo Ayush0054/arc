@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Github, Twitter, Facebook } from "lucide-react";
 function Footer() {
   return (
-    <footer className=" mb-12">
+    <footer className=" my-12 mx-20">
       <div>
         <div className=" flex flex-col md:flex-row md:gap-2 gap-6 justify-between md:items-center">
           <div className="flex gap-2 items-center">
