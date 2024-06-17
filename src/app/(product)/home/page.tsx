@@ -34,16 +34,16 @@ function Page() {
   }, []);
   return (
     <div>
-      {arcs && (
-        <div>
-          <Button
-            variant="outline"
-            onClick={handleCreate}
-            className=" flex gap-2"
-          >
-            {" "}
-            <Plus /> Create your Task
-          </Button>
+      <div>
+        <Button
+          variant="outline"
+          onClick={handleCreate}
+          className=" flex gap-2"
+        >
+          {" "}
+          <Plus /> Create your Task
+        </Button>
+        {arcs && (
           <div className=" flex flex-wrap gap-6 my-5">
             {arcs?.map((arc) => (
               <ArcPost
@@ -55,9 +55,9 @@ function Page() {
               />
             ))}
           </div>
-          {showCreate && <CreateModal setShowCreate={setShowCreate} />}
-        </div>
-      )}
+        )}
+        {showCreate && <CreateModal setShowCreate={setShowCreate} />}
+      </div>
     </div>
   );
 }
