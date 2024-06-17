@@ -48,7 +48,7 @@ function NotesFeature() {
             variants={variants1}
           >
             <div className=" w-[550px] lg:ml-20 ml-4   ">
-              <Badge className=" text-xl border-green-700/50 bg-green-300/10 text-green-700 font-bold  px-5 hover:bg-green-300/10  border-2 ">
+              <Badge className=" text-xl bg-blue-400/10 border-blue-800 hover:bg-blue-400/10 font-bold  px-5 hover:bg-green-300/10  border-2 ">
                 AI Notes
               </Badge>
               <h1 className=" text-5xl font-sans font-semibold mt-5">
@@ -61,11 +61,17 @@ function NotesFeature() {
 
               <h3 className="text-2xl font-normal  mt-1  flex gap-1  items-center">
                 <DotIcon />
-                use ai to create notes
+                use ai to create notes{" "}
+                <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10  text-lg  font-bold">
+                  coming soon
+                </Badge>
               </h3>
               <h3 className="text-2xl font-normal   mt-1  flex gap-1 items-center">
                 <DotIcon />
-                Export notes to Notion
+                Export notes to Notion{" "}
+                <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10  text-lg  font-bold">
+                  coming soon
+                </Badge>
               </h3>
             </div>
           </motion.h1>

@@ -3,7 +3,7 @@ import img from "@/assets/calendar3.png";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
-import { Clock1 } from "lucide-react";
+import { Clock1, Dot } from "lucide-react";
 import AnimatedGridPattern from "../ui/animated-grid";
 function CalendarFeature() {
   const FADE_DOWN_ANIMATION_VARIANTS = {
@@ -64,18 +64,19 @@ function CalendarFeature() {
           >
             <div className=" w-[550px] text-start ">
               <div className="w-[207px] h-[243px] bg-blue-600 rounded-full blur-[300px]"></div>
-              <div className="font-bold ml-5 text-4xl flex gap-3 items-center -mt-[300px] relative ">
-                <Clock1 />
+              <div className="font-bold  text-4xl  -mt-[300px] relative ">
                 <span className="text-5xl font-sans font-semibold mt-5">
                   Set reminder for your tasks
                 </span>
               </div>
 
-              <h3 className="text-2xl p-5 bg-black/40 mt-1 rounded-lg">
+              <h3 className="text-2xl flex items-center gap-1  mt-1 rounded-lg">
+                <Dot />
                 Every task have their own reminder button
               </h3>
 
-              <h3 className="text-2xl p-5 bg-black/40 mt-1 rounded-lg">
+              <h3 className="text-2xl flex items-center gap-1  mt-1 rounded-lg">
+                <Dot />
                 We are using google calendar to set reminder
               </h3>
             </div>
