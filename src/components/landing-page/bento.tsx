@@ -202,12 +202,12 @@ const features = [
 
 export function BentoDemo() {
   return (
-    <div className=" flex justify-center mx-20 -mt-[400px]">
+    <div className=" flex justify-center lg:mx-20 mx-4 -mt-[400px]">
       <div>
-        <h1 className=" text-5xl font-semibold font-sans text-center ">
+        <h1 className=" lg:text-5xl text-2xl font-semibold font-sans text-center ">
           Quick Overview
         </h1>
-        <BentoGrid className="  w-[1000px]  mt-12 ">
+        <BentoGrid className="  lg:w-[1000px]  mt-12 ">
           {features.map((feature, idx) => (
             <BentoCard key={idx} {...feature} />
           ))}

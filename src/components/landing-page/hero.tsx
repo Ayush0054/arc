@@ -14,7 +14,7 @@ function Hero() {
   return (
     <motion.div
       initial="hidden"
-      className="mx-20"
+      className="lg:mx-20 mx-4"
       animate="show"
       viewport={{ once: true }}
       variants={{
@@ -26,15 +26,15 @@ function Hero() {
         },
       }}
     >
-      <div className="  flex  flex-col items-center mt-32">
+      <div className="  flex  flex-col items-center  lg:mt-32 mt-12">
         <motion.h1
           className="text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10 text-2xl px-4 font-bold">
+          <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10 lg:text-2xl text-lg px-4 font-bold">
             Alpha version
           </Badge>
-          <div className="text-center text-red-900/opacity-20 text-7xl font-medium text-white/60 bg-gradient-to-r from-[#203368] via-[#f55e23] to-[#f7d690] bg-[length:var(--bg-size)_100%] bg-clip-text ">
+          <div className="text-center text-red-900/opacity-20 lg:text-7xl text-4xl font-medium text-white/60 bg-gradient-to-r from-[#203368] via-[#f55e23] to-[#f7d690] bg-[length:var(--bg-size)_100%] bg-clip-text ">
             Boost your productivity with Arc
           </div>
         </motion.h1>

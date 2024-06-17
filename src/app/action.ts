@@ -8,9 +8,15 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { Resend } from "resend";
 
 export const getArcById = async (id: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return redirectToSignIn();
+  }
   const arc = await prisma.arc.findUnique({
     where: {
       id: id,
+      profileId: user.id,
     },
     include: {
       profile: {

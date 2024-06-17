@@ -18,6 +18,10 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        "2xl": "2048px",
+        // "3xl": "2548",
+      },
       fontFamily: {
         nunito: ["Nunito"],
         sans: ["var(--font-geist-sans)"],

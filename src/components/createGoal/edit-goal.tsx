@@ -15,19 +15,10 @@ function EditGoal({
   getGoalDetail,
   setShowEditModal,
   arcId,
-}: // name,
-// description,
-// type,
-// completionDate,
-{
-  // onClose: () => void;
+}: {
   getGoalDetail: any;
   setShowEditModal: any;
   arcId: any;
-  // name: any;
-  // description: any;
-  // type: any;
-  // completionDate: any;
 }) {
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
@@ -57,15 +48,6 @@ function EditGoal({
     getGoalDetails();
   }, []);
 
-  // const startEditing = (index: any) => {
-  //   setEditIndex(index);
-  //   setEditValue(tasks[index]);
-  // };
-
-  // const handleEditChange = (e: any) => {
-  //   setEditValue(e.target.value);
-  // };
-
   const handleNewTaskChange = (e: any) => {
     setNewTask(e.target.value);
   };
@@ -83,14 +65,17 @@ function EditGoal({
     }
   };
   const deleteTask = async (id: any) => {
-    // console.log(id);
     //@ts-ignore
     const updatedTasks = tasks.filter((task) => task.id !== id);
-    // console.log(updatedTasks);
 
     setTasks(updatedTasks);
     await deleteTodoByID(id, arcId);
   };
+
+  // if (tasks.length === 0) {
+  //   return "Loading content...";
+  // }
+
   return (
     <div
       className="fixed inset-0 bg-gray-900 backdrop-blur-2xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
@@ -106,83 +91,90 @@ function EditGoal({
           damping: 20,
         }}
       >
-        <div className="mt-12  shadow-md h-[700px] border-gray-800 border   max-h-[1000px] lg:w-[600px] flex flex-col bg-black/60 rounded-xl lg:mx-8 mx-4 gap-3">
-          {" "}
-          <div className=" m-4 flex justify-end ">
-            <button
-              onClick={() => {
-                setShowEditModal(false);
-                getGoalDetail();
-              }}
-            >
-              <X color="gray" />
-            </button>
+        {tasks.length === 0 ? (
+          <div className="flex items-center justify-center space-x-2 mt-32">
+            <div className="h-5 w-5 animate-bounce rounded-full bg-green-500 [animation-delay:-0.3s]"></div>
+            <div className="h-5 w-5 animate-bounce rounded-full bg-green-500 [animation-delay:-0.13s]"></div>
+            <div className="h-5 w-5 animate-bounce rounded-full bg-green-500"></div>
           </div>
-          <div className=" flex flex-col justify-between   ">
-            <div className="lg:mx-10 mx-4 flex flex-col items-center  mb-10 ">
-              <div className=" mb-4 flex items-center gap-2 lg:w-[500px]">
-                <Input
-                  className=" w-full bg-black/20 border-gray-900 text-gray-100"
-                  type="text"
-                  placeholder="Add new task"
-                  value={newTask}
-                  onChange={handleNewTaskChange}
-                />
-                <Button onClick={addNewTask}>Add Task</Button>
-              </div>
+        ) : (
+          <div className="mt-12  shadow-md h-[700px] border-gray-800 border   max-h-[1000px] lg:w-[600px] flex flex-col bg-black/60 rounded-xl lg:mx-8 mx-4 gap-3">
+            {" "}
+            <div className=" m-4 flex justify-end ">
+              <button
+                onClick={() => {
+                  setShowEditModal(false);
+                  getGoalDetail();
+                }}
+              >
+                <X color="gray" />
+              </button>
             </div>
-            <div className="overflow-y-scroll h-[350px] px-10 py-2">
-              {tasks?.map((task) => (
-                <div
-                  key={
-                    //@ts-ignore
-                    task?.id
-                  }
-                  className="flex items-center justify-between my-5 space-x-2"
-                >
-                  <label
-                    htmlFor={`task-${
+            <div className=" flex flex-col justify-between   ">
+              <div className="lg:mx-10 mx-4 flex flex-col items-center  mb-10 ">
+                <div className=" mb-4 flex items-center gap-2 lg:w-[500px]">
+                  <Input
+                    className=" w-full bg-black/20 border-gray-900 text-gray-100"
+                    type="text"
+                    placeholder="Add new task"
+                    value={newTask}
+                    onChange={handleNewTaskChange}
+                  />
+                  <Button onClick={addNewTask}>Add Task</Button>
+                </div>
+              </div>
+              <div className="overflow-y-scroll h-[350px] px-10 py-2">
+                {tasks?.map((task) => (
+                  <div
+                    key={
                       //@ts-ignore
                       task?.id
-                    }`}
-                    className="lg:text-lg text-sm font-medium font-nunito text-gray-100 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {
-                      //@ts-ignore
-                      task?.todo
                     }
-                  </label>
-
-                  <div className="flex gap-3">
-                    <button
-                      onClick={
-                        //@ts-ignore
-                        () => deleteTask(task.id)
-                      }
-                      className="ml-auto"
+                    className="flex items-center justify-between my-5 space-x-2"
+                  >
+                    <p
+                      // htmlFor={`task-${
+                      //   //@ts-ignore
+                      //   task?.id
+                      // }`}
+                      className="lg:text-lg text-sm font-medium font-nunito text-gray-100 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      <Trash2 color="gray" />
-                    </button>
+                      {
+                        //@ts-ignore
+                        task?.todo
+                      }
+                    </p>
+
+                    <div className="flex gap-3">
+                      <button
+                        onClick={
+                          //@ts-ignore
+                          () => deleteTask(task.id)
+                        }
+                        className="ml-auto"
+                      >
+                        <Trash2 color="gray" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className=" flex justify-end mt-20 mx-10 ">
-              {tasks.length > 0 && (
-                <Button
-                  // onClick={createArcTodos}
-                  onClick={() => {
-                    setShowEditModal(false);
-                    getGoalDetail();
-                  }}
-                  className=""
-                >
-                  Save
-                </Button>
-              )}
+                ))}
+              </div>
+              <div className=" flex justify-end mt-20 mx-10 ">
+                {tasks.length > 0 && (
+                  <Button
+                    onClick={() => {
+                      setShowEditModal(false);
+                      getGoalDetail();
+                    }}
+                    className=""
+                  >
+                    Save
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </motion.div>
     </div>
   );

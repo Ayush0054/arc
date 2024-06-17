@@ -47,7 +47,7 @@ function NotesFeature() {
             transition={{ duration: 1 }}
             variants={variants1}
           >
-            <div className=" w-[550px] ml-20   ">
+            <div className=" w-[550px] lg:ml-20 ml-4   ">
               <Badge className=" text-xl border-green-700/50 bg-green-300/10 text-green-700 font-bold  px-5 hover:bg-green-300/10  border-2 ">
                 AI Notes
               </Badge>

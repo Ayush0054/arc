@@ -69,9 +69,9 @@ function NotesModal({
     }
   }, [arcid, editor]);
 
-  if (!editor) {
-    return "Loading content...";
-  }
+  // if (!editor) {
+  //   return "Loading content...";
+  // }
 
   return (
     <div
@@ -84,25 +84,33 @@ function NotesModal({
         exit={{ y: 300, opacity: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
-        <div className="min-h-[90vh] min-w-[90vw] lg:m-12 m-4  shadow-md flex flex-col  rounded-xl gap-3 ">
-          <Card className="min-h-[90vh] min-w-[90vw] bg-[#111316]">
-            <div className="m-10 flex justify-end gap-3">
-              <Button onClick={save}>Save</Button>
-              <button onClick={() => setShowNotes(false)}>
-                <X color="gray" />
-              </button>
-            </div>
-            <BlockNoteView
-              data-theming-css-variables-demo
-              className="h-full pt-8"
-              editor={editor}
-              //@ts-ignore
-              // theme={defaultColorScheme}
-              onChange={() => setBlocks(editor.document)}
-              data-theming-css-demo
-            />
-          </Card>
-        </div>
+        {editor ? (
+          <div className="min-h-[90vh] min-w-[90vw] lg:m-12 m-4  shadow-md flex flex-col  rounded-xl gap-3 ">
+            <Card className="min-h-[90vh] min-w-[90vw] bg-[#111316]">
+              <div className="m-10 flex justify-end gap-3">
+                <Button onClick={save}>Save</Button>
+                <button onClick={() => setShowNotes(false)}>
+                  <X color="gray" />
+                </button>
+              </div>
+              <BlockNoteView
+                data-theming-css-variables-demo
+                className="h-full pt-8"
+                editor={editor}
+                //@ts-ignore
+                // theme={defaultColorScheme}
+                onChange={() => setBlocks(editor.document)}
+                data-theming-css-demo
+              />
+            </Card>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center space-x-2 mt-32">
+            <div className="h-5 w-5 animate-bounce rounded-full bg-green-500 [animation-delay:-0.3s]"></div>
+            <div className="h-5 w-5 animate-bounce rounded-full bg-green-500 [animation-delay:-0.13s]"></div>
+            <div className="h-5 w-5 animate-bounce rounded-full bg-green-500"></div>
+          </div>
+        )}
       </motion.div>
     </div>
   );

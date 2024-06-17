@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Trash2, Pen, Stars } from "lucide-react";
-
+import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 
 import axios from "axios";
@@ -174,6 +174,7 @@ function CreateTaskModal({
   //   }
   // };
   const createGoalAndTodos = async () => {
+    setIsLoading(true);
     const goalData = {
       title: name,
       description: description,
@@ -193,10 +194,8 @@ function CreateTaskModal({
     try {
       // Create goal
       const goalResponse = await axios.post("/api/createarc", goalData);
-      // console.log(goalResponse.data);
 
       const newArcId = goalResponse.data.id;
-      // setArc(goalResponse.data);
 
       // Data for creating todos
       const todosData = {
@@ -209,8 +208,8 @@ function CreateTaskModal({
       toast("Arc and tasks has been created", {
         description: "Goal creation success message",
       });
-      // console.log(todosResponse);
-      localStorage.removeItem(`task ${newArcId}`);
+
+      setIsLoading(false);
       router.push(`/arc/${newArcId}`);
     } catch (error) {
       console.error("Error in creating goal or todos:", error);
@@ -219,7 +218,7 @@ function CreateTaskModal({
   return (
     <div className=" flex flex-col justify-between   ">
       <div className="mx-10 flex flex-col items-center  mb-10 ">
-        <div className=" mb-4 flex items-center gap-2 w-[500px]">
+        <div className=" mb-4 flex items-center gap-2 lg:w-[500px]">
           <Input
             className=" w-full"
             type="text"
@@ -239,45 +238,94 @@ function CreateTaskModal({
           Create Task using Ai <Stars />
         </Button>
       </div>
-      <div className="overflow-y-scroll h-[350px] px-10 py-2 ">
-        {tasks?.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between mb-5 mt-5 space-x-2 "
-          >
-            {editIndex === index ? (
-              <Input
-                value={editValue}
-                onChange={handleEditChange}
-                className="text-sm font-medium leading-none w-full border resize-y"
-              />
-            ) : (
-              <label
-                htmlFor={`task-${index}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {item}
-              </label>
-            )}
-            <div className="flex gap-3">
-              {editIndex === index && (
-                <Button disabled={isLoading} onClick={() => saveEdit(index)}>
-                  Save
-                </Button>
-              )}
-              <button onClick={() => deleteTask(index)} className="ml-auto">
-                <Trash2 />
-              </button>
-              {editIndex !== index && (
-                <button onClick={() => startEditing(index)}>
-                  <Pen />
-                </button>
-              )}
-            </div>
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <div className="flex space-x-2">
+            <motion.div
+              className="h-3 w-3 rounded-full bg-red-500"
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            />
+            <motion.div
+              className="h-3 w-3 rounded-full bg-red-500"
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: 0.3,
+              }}
+            />
+            <motion.div
+              className="h-3 w-3 rounded-full bg-red-500"
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: 0.6,
+              }}
+            />
           </div>
-        ))}
-      </div>
-      <div className=" flex justify-end mt-20 mx-10 ">
+        </div>
+      ) : (
+        <div className="overflow-y-scroll h-[350px] px-10 py-2 ">
+          {tasks?.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between mb-5 mt-5 space-x-2 "
+            >
+              {editIndex === index ? (
+                <Input
+                  value={editValue}
+                  onChange={handleEditChange}
+                  className="text-sm font-medium leading-none w-full border resize-y"
+                />
+              ) : (
+                <label
+                  htmlFor={`task-${index}`}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {item}
+                </label>
+              )}
+              <div className="flex gap-3">
+                {editIndex === index && (
+                  <Button disabled={isLoading} onClick={() => saveEdit(index)}>
+                    Save
+                  </Button>
+                )}
+                <button onClick={() => deleteTask(index)} className="ml-auto">
+                  <Trash2 />
+                </button>
+                {editIndex !== index && (
+                  <button onClick={() => startEditing(index)}>
+                    <Pen />
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      <div
+        className={` flex justify-end  ${
+          isLoading ? "mt-[430px]" : "mt-20"
+        } mx-10 `}
+      >
         {tasks.length > 0 && (
           <Button
             disabled={isLoading}
