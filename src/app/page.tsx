@@ -20,7 +20,7 @@ export default function Home() {
 
       <Navbar setAuthModal={setAuthModal} />
       <Hero />
-      {/* <Feature2 /> */}
+
       <div className=" flex justify-center ">
         <div className="w-[500px] h-[303px] bg-blue-600 rounded-full blur-[300px] mt-60"></div>
       </div>

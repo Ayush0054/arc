@@ -14,10 +14,6 @@ import axios from "axios";
 function Page() {
   const [showCreate, setShowCreate] = useState(false);
   const handleCreate = () => {
-    // const user = currentUser();
-    // if (!user) {
-    //   return redirectToSignIn();
-    // }
     setShowCreate(true);
   };
   const initiateProfile = async () => {
