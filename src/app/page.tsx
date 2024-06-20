@@ -16,10 +16,10 @@ import { useState } from "react";
 export default function Home() {
   const [authModal, setAuthModal] = useState(false);
   return (
-    <div className=" 2xl:items-center flex flex-col ">
+    <div className=" 2xl:items-center 2xl:flex 2xl:flex-col ">
       <img
         src="https://tailwindcss.com/_next/static/media/docs@30.8b9a76a2.avif"
-        className="absolute z-2 -top-0 left-10"
+        className="absolute z-2 -top-0 lg:left-10"
       />
       <div className="w-[285px] h-[250px] bg-blue-600 rounded-full blur-[200px]"></div>
 
@@ -27,7 +27,7 @@ export default function Home() {
       <Hero />
 
       <div className=" flex justify-center ">
-        <div className="w-[500px] h-[303px] bg-blue-600 rounded-full blur-[300px] mt-60"></div>
+        <div className="lg:w-[500px] w-[380px] h-[303px] bg-blue-600 rounded-full blur-[300px] mt-60"></div>
       </div>
 
       <BentoDemo />

@@ -1,12 +1,6 @@
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+
+import { motion } from "framer-motion";
 import img from "@/assets/notes-full.png";
 import { CalendarIcon, FileTextIcon, InputIcon } from "@radix-ui/react-icons";
 import { Code, Notebook, Share2Icon, Workflow } from "lucide-react";
@@ -199,21 +193,44 @@ const features = [
     ),
   },
 ];
-
+const FADE_DOWN_ANIMATION_VARIANTS = {
+  hidden: { opacity: 0, y: -10 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" } },
+};
 export function BentoDemo() {
   return (
     <div className=" flex justify-center lg:mx-20 mx-4 -mt-[400px]">
-      <div>
-        <h1 className=" lg:text-5xl text-2xl font-semibold font-sans text-center ">
-          Quick Overview
-        </h1>
-        <BentoGrid className="  lg:w-[1000px]  mt-12 ">
-          {features.map((feature, idx) => (
-            <BentoCard key={idx} {...feature} />
-          ))}
-          {/* <BorderBeam size={50} duration={12} delay={9} /> */}
-        </BentoGrid>
-      </div>
+      <motion.div
+        initial="hidden"
+        // className="lg:mx-20 mx-4"
+        animate="show"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          show: {
+            transition: {
+              staggerChildren: 0.15,
+            },
+          },
+        }}
+      >
+        <motion.div
+          className="flex justify-center  "
+          variants={FADE_DOWN_ANIMATION_VARIANTS}
+        >
+          <div>
+            <h1 className=" lg:text-5xl text-2xl font-semibold font-sans text-center ">
+              Quick Overview
+            </h1>
+            <BentoGrid className="  lg:w-[1000px]  mt-12 ">
+              {features.map((feature, idx) => (
+                <BentoCard key={idx} {...feature} />
+              ))}
+              {/* <BorderBeam size={50} duration={12} delay={9} /> */}
+            </BentoGrid>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

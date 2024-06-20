@@ -67,6 +67,8 @@ function CreateTaskModal({
     const data = await response.json();
     const { output } = data;
     // console.log("OpenAI replied...", output.content);
+    console.log(output.content);
+
     const regex = /"\d+\..+?"/g;
     const matches = output.content.match(regex);
     // console.log(matches);

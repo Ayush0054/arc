@@ -31,10 +31,10 @@ function Hero() {
           className="text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10 lg:text-2xl text-lg px-4 font-bold">
+          <Badge className=" bg-blue-400/10 border-blue-800 hover:bg-blue-400/10 lg:text-2xl text-lg px-4 font-semibold">
             Alpha version
           </Badge>
-          <div className="text-center text-red-900/opacity-20 lg:text-7xl text-4xl font-medium text-white/60 bg-gradient-to-r from-[#203368] via-[#f55e23] to-[#f7d690] bg-[length:var(--bg-size)_100%] bg-clip-text ">
+          <div className="text-center  text-red-900/opacity-20 lg:text-7xl text-4xl font-medium text-white/60 bg-gradient-to-r from-[#203368] via-[#f55e23] to-[#f7d690] bg-[length:var(--bg-size)_100%] bg-clip-text ">
             Boost your productivity with Arc
           </div>
         </motion.h1>
@@ -46,7 +46,7 @@ function Hero() {
         >
           <Image
             src={heroImage}
-            className="  -mt-[300px] lg:w-[1200px] relative shadow-xl"
+            className="  -mt-[300px] lg:w-[1200px] w-[400px] rounded-lg relative shadow-xl"
             alt=""
           />
         </motion.div>

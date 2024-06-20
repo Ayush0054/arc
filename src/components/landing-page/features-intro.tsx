@@ -8,7 +8,7 @@ import RetroGrid from "./retro-grid";
 function FeaturesIntro() {
   return (
     <div>
-      <div className="relative p-20  ">
+      <div className="relative  mt-32 ] ">
         <div className="pointer-events-none absolute h-[150px] w-full overflow-hidden opacity-50 [perspective:200px]">
           <div className="absolute inset-0 [transform:rotateX(35deg)]">
             <GridPattern
@@ -19,7 +19,7 @@ function FeaturesIntro() {
               className={cn(
                 "animate-grid",
 
-                "[background-repeat:repeat] [background-size:60px_60px] [height:300vh] [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600vw]",
+                "[background-repeat:repeat] [background-size:60px_60px] [height:300vh]  [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600vw]",
 
                 // Light Styles
                 "[background-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.3)_1px,transparent_0)]",
@@ -30,7 +30,8 @@ function FeaturesIntro() {
             />
           </div>
         </div>
-        <span className="pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-center text-7xl font-bold leading-none tracking-tighter text-transparent">
+
+        <span className="pointer-events-none z-10 lg:px-20 px-4 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-center lg:text-7xl text-4xl font-semibold leading-none tracking-tighter text-transparent">
           Features
         </span>
       </div>

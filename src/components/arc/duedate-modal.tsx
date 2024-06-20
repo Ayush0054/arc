@@ -88,22 +88,6 @@ function DuedateModal({
 
   return (
     <div className=" flex flex-col items-center ">
-      {/* <div className="  ">
-        <TimePicker onChange={onChange} value={value} />
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className=""
-        />
-      </div>
-      <div className=" flex justify-between mt-4 ">
-        <Button onClick={scheduleTasks} variant="outline">
-          Set Google Reminder
-        </Button>
-        <Button>set</Button>
-      </div> */}
-
       <Calendar
         mode="single"
         fromDate={new Date()}
@@ -122,7 +106,6 @@ function DuedateModal({
         >
           Set Google Reminder
         </Button>
-        {/* <Button>set</Button> */}
       </div>
     </div>
   );
