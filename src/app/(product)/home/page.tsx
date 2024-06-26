@@ -17,7 +17,7 @@ function Page() {
   };
   const initiateProfile = async () => {
     const response = await initialProfile();
-    console.log(response.email);
+    console.log(response?.email);
   };
   useEffect(() => {
     initiateProfile();
@@ -61,7 +61,7 @@ function Page() {
           {" "}
           <Plus /> Create your Task
         </Button>
-        {arcs.length === 0 ? (
+        {arcs?.length === 0 ? (
           <div className="flex items-center justify-center">
             <div className="relative h-20 w-20 mt-32">
               <motion.div

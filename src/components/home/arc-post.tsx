@@ -41,7 +41,7 @@ function ArcPost({ arc }: { arc: any }) {
           )}
         </Card>
         <Button
-          onClick={() => router.push(`/arc/${arc.id}`)}
+          onClick={() => router.push(`/arc/${arc?.id}`)}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
         >
           View
