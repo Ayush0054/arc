@@ -11,6 +11,8 @@ export async function POST(req: Request) {
     if (!user) {
       return redirectToSignIn();
     }
+    console.log(user);
+
     const profile = await prisma.profile.findUnique({
       where: {
         userId: user.id,

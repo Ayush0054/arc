@@ -8,7 +8,7 @@ import RetroGrid from "./retro-grid";
 function FeaturesIntro() {
   return (
     <div>
-      <div className="relative  mt-32 ] ">
+      <div className="relative  mt-32  ">
         <div className="pointer-events-none absolute h-[150px] w-full overflow-hidden opacity-50 [perspective:200px]">
           <div className="absolute inset-0 [transform:rotateX(35deg)]">
             <GridPattern

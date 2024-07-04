@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { initialProfile } from "@/app/lib/createprofile";
 
 import { Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 function Page() {
   const [showCreate, setShowCreate] = useState(false);
@@ -17,9 +17,9 @@ function Page() {
   };
   const initiateProfile = async () => {
     const response = await initialProfile();
-    console.log(response?.email);
+    console.log(response);
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     initiateProfile();
   }, []);
   const [arcs, setArcs] = useState([]);
