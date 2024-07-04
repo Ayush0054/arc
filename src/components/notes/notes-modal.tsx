@@ -72,7 +72,21 @@ function NotesModal({
   // if (!editor) {
   //   return "Loading content...";
   // }
+  const handleKeyPress = useCallback((event: any) => {
+    if (event.shiftKey && event.key === "N") {
+      event.preventDefault();
+      setShowNotes(false);
+    }
+  }, []);
 
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
   return (
     <div
       className="fixed inset-0 bg-gray-900 backdrop-blur-2xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
