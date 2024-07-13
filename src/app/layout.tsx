@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 // import { Inter as FontSans } from "next/font/google";
 
 import { GeistSans } from "geist/font/sans";
-
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { cn } from "@/app/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -39,6 +39,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Analytics />
           </ThemeProvider>
           <Toaster />
         </body>
