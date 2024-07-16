@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function Home() {
   const [authModal, setAuthModal] = useState(false);
   return (
-    <div className=" 2xl:items-center 2xl:flex 2xl:flex-col ">
+    <div className=" 2xl:items-center 2xl:flex 2xl:flex-col  ">
       <img
         src="https://tailwindcss.com/_next/static/media/docs@30.8b9a76a2.avif"
         className="absolute z-2 -top-0 lg:left-10"

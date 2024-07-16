@@ -170,13 +170,13 @@ function Page({ params }: Params) {
               </Label>
               <Switch
                 id="isDone"
-                className="  data-[state=unchecked]:bg-red-600"
+                // className="  data-[state=unchecked]:bg-red-600"
                 checked={isCompleted as boolean}
                 onCheckedChange={handleArcCompleted}
               />
             </div>
           </div>
-          {/* <Input className=" border-none focus-visible:ring-0" /> */}
+
           <h2 className=" text-xl  font-medium text-start mt-6 mb-6 text-gray-500">
             {" "}
             {description}
@@ -261,7 +261,7 @@ function Page({ params }: Params) {
                     task?.isChecked
                   )
                 }
-                className="  bg-[#1B1717]/90  data-[state=checked]:bg-[#1B1717]/90 border-none px-1 w-6 h-6 "
+                className="  bg-[#242424] data-[state=checked]:bg-[#242424]/60 data-[state=checked]:text-white/70  border-none px-1 w-6 h-6 "
               />
 
               <label
@@ -272,8 +272,8 @@ function Page({ params }: Params) {
                 className={` lg:text-lg text-sm  font-medium font-nunito text-gray-50 leading-none ${
                   //@ts-ignore
                   task?.isChecked
-                    ? "line-through text-gray-600"
-                    : "text-gray-500"
+                    ? "line-through text-gray-200"
+                    : "text-gray-100"
                 } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
               >
                 {

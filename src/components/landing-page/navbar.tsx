@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ setAuthModal }) => {
                 onClick={() =>
                   isSignedIn ? router.push("/home") : setAuthModal(true)
                 }
-                className="bg-[#0e1d24] hover:bg-[#0e1d24] rounded-2xl"
+                className="bg-[#0e1d24] hover:bg-[#0e1d24] rounded-2xl text-white"
               >
                 Get Started
               </Button>
