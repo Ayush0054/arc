@@ -21,7 +21,7 @@ function ArcPost({ arc }: { arc: any }) {
               )}
             </div>
           </div>
-          <CardDescription className=" text-base text-gray-600">
+          <CardDescription className=" text-base font-medium text-gray-400">
             {arc?.description}
           </CardDescription>
 
@@ -33,7 +33,7 @@ function ArcPost({ arc }: { arc: any }) {
             <div className="flex items-center space-x-2 shadow-inner p-4 bg-gray-950">
               <label
                 htmlFor="terms"
-                className="text-base font-medium text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-base font-normal text-gray-500 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 1. {arc?.todo[0]?.todo}
               </label>

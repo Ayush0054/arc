@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-import { Trash2, Pen, Stars } from "lucide-react";
+import {
+  Trash2,
+  Pen,
+  Stars,
+  Plus,
+  PlusIcon,
+  CopyPlus,
+  CopyMinus,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 
@@ -9,6 +17,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import WordFadeIn from "../ui/word-fade-in";
 // import { useAuth, useUser } from "@clerk/nextjs";
 
 function CreateTaskModal({
@@ -228,20 +237,29 @@ function CreateTaskModal({
             value={newTask}
             onChange={handleNewTaskChange}
           />
-          <Button disabled={isLoading} onClick={addNewTask}>
-            Add Task
-          </Button>
+          <button
+            className="  hover:bg-blue-400/10 shadow-sm hover:shadow-blue-400/40 p-2 rounded-md"
+            disabled={isLoading}
+            onClick={addNewTask}
+          >
+            <CopyPlus />
+          </button>
+          <button
+            onClick={CreateTodosFromAi}
+            disabled={isLoading}
+            // variant="secondary"
+            className="  hover:bg-blue-400/10 shadow-sm hover:shadow-blue-400/40 p-2 rounded-md"
+          >
+            <Stars className=" text-primary" />
+          </button>
         </div>
-        <Button
-          onClick={CreateTodosFromAi}
-          disabled={isLoading}
-          className=" w-3/4 flex gap-2"
-        >
-          Create Task using Ai <Stars />
-        </Button>
       </div>
       {isLoading ? (
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
+          <WordFadeIn
+            className="my-3 text-red-300 "
+            words="Creating Tasks from AI"
+          />
           <div className="flex space-x-2">
             <motion.div
               className="h-3 w-3 rounded-full bg-red-500"
@@ -311,11 +329,11 @@ function CreateTaskModal({
                   </Button>
                 )}
                 <button onClick={() => deleteTask(index)} className="ml-auto">
-                  <Trash2 />
+                  <CopyMinus className=" text-red-500" />
                 </button>
                 {editIndex !== index && (
                   <button onClick={() => startEditing(index)}>
-                    <Pen />
+                    <Pen className="text-primary/70" />
                   </button>
                 )}
               </div>

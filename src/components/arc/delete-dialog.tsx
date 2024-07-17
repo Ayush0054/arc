@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DeleteIcon, Trash2 } from "lucide-react";
 
 function DeleteDialog({ handleDelete }: { handleDelete: any }) {
   return (
@@ -16,7 +17,7 @@ function DeleteDialog({ handleDelete }: { handleDelete: any }) {
       <Dialog>
         <DialogTrigger asChild>
           <Button className=" w-full" variant="destructive">
-            Delete
+            <Trash2 />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
@@ -27,16 +28,16 @@ function DeleteDialog({ handleDelete }: { handleDelete: any }) {
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="sm:justify-start">
+          <DialogFooter className="sm:justify-end">
             <div className=" flex gap-2">
-              <Button onClick={handleDelete} variant="destructive">
-                Delete
-              </Button>
               <DialogClose asChild>
                 <Button type="button" variant="outline">
                   Close
                 </Button>
               </DialogClose>
+              <Button onClick={handleDelete} variant="destructive">
+                Delete
+              </Button>
             </div>
           </DialogFooter>
         </DialogContent>

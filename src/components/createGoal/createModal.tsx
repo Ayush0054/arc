@@ -30,11 +30,12 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
 
   return (
     <div
-      className="fixed inset-0 bg-gray-900 backdrop-blur-xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
+      className="fixed inset-0 bg-gray-950 backdrop-blur-xl flex justify-center bg-opacity-50 overflow-y-auto h-full w-full"
       id="my-modal"
     >
-      <div className="mt-12 border shadow-md h-[750px] max-h-[1000px] lg:w-[600px] flex flex-col bg-black/60 rounded-xl mx-8 gap-3 border-gray-800">
-        <div className="m-4 flex justify-end">
+      <div className="mt-12 border shadow-md h-[750px] max-h-[1000px] lg:w-[600px] flex flex-col bg-black/10 rounded-xl lg:mx-8 gap-3 border-gray-800">
+        <div className=" lg:w-[300px] lg:h-[300px] w-[200px] h-[200px] rounded-full lg:blur-[200px] blur-[150px] bg-gradient-to-r from-green-200 to-blue-500"></div>
+        <div className="m-4 lg:-mt-[250px] -mt-[200px]  flex justify-end">
           <button
             onClick={() => {
               setShowCreate(false);
@@ -44,9 +45,9 @@ function CreateModal({ setShowCreate }: { setShowCreate: any }) {
           </button>
         </div>
         {!showCreateTask ? (
-          <div className="flex flex-col justify-center items-center mt-6">
+          <div className="flex flex-col justify-center items-center mt-6 ">
             <h1 className="text-3xl font-semibold my-4">Create a new task</h1>
-            <div className="flex flex-col w-[500px] gap-8 p-10">
+            <div className="flex flex-col lg:w-[500px] w-[400px] gap-8 lg:p-10 p-6">
               <div className="grid gap-4">
                 <Label className="">Arc Title</Label>
                 <Input

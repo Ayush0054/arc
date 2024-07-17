@@ -46,7 +46,7 @@ function Hero() {
         >
           <Image
             src={heroImage}
-            className="  -mt-[300px] lg:w-[1200px] w-[400px] rounded-lg relative shadow-xl"
+            className="  -mt-[280px] lg:w-[1000px] w-[400px] rounded-lg relative shadow-2xl"
             alt=""
           />
         </motion.div>

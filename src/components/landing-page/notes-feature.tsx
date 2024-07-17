@@ -3,11 +3,13 @@ import img from "@/assets/notes2.png";
 import img2 from "@/assets/notes-full.png";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Dot, DotIcon } from "lucide-react";
+import { ArrowBigRightDash } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import GridPattern from "../ui/grid-pattern";
 import { Badge } from "../ui/badge";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 function NotesFeature() {
+  //framer constants
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -10 },
     show: { opacity: 1, y: 0, transition: { type: "spring" } },
@@ -53,22 +55,24 @@ function NotesFeature() {
                 AI Notes
               </Badge>
               <h1 className=" lg:text-4xl text-2xl font-sans font-semibold mt-5">
-                Create Notes for every Arc
+                Create{" "}
+                <span className=" bg-primary/80 px-2 rounded-md">Notes</span>{" "}
+                for every Arc
               </h1>
               <h3 className="lg:text-2xl text-lg font-normal flex gap-1 mt-4  items-center">
-                <DotIcon />
+                <ArrowBigRightDash />
                 notion style editor
               </h3>
 
               <h3 className="lg:text-2xl text-lg font-normal  mt-1  flex gap-1  items-center">
-                <DotIcon />
+                <ArrowBigRightDash />
                 use ai to create notes{" "}
                 <Badge className=" text-white bg-blue-400/10 border-blue-800 hover:bg-blue-400/10  text-lg  lg:font-bold font-semibold">
                   coming soon
                 </Badge>
               </h3>
               <h3 className="lg:text-2xl text-lg font-normal   mt-2  flex gap-1 items-center">
-                <DotIcon />
+                <ArrowBigRightDash />
                 Export notes to Notion{" "}
                 <Badge className=" text-white bg-blue-400/10 border-blue-800 hover:bg-blue-400/10  text-lg  lg:font-bold font-semibold">
                   coming soon

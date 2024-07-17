@@ -1,12 +1,13 @@
 import React from "react";
-import img from "@/assets/ai-tasks.png";
-import img2 from "@/assets/ai-task-full.png";
+import img from "@/assets/ai-tasks2.png";
+import img2 from "@/assets/ai-task-full2.png";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Dot, DotIcon } from "lucide-react";
+import { ArrowBigRightDash } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import GridPattern from "../ui/grid-pattern";
 function AiFeature() {
+  //framer constants
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -10 },
     show: { opacity: 1, y: 0, transition: { type: "spring" } },
@@ -49,24 +50,18 @@ function AiFeature() {
           >
             <div className=" lg:w-[550px] bg-black/40 rounded-xl  ">
               <div className="font-bold  lg:text-4xl text-2xl flex gap-3 ">
-                ✨
-                <span
-                  className={cn(
-                    `inline animate-gradient  bg-gradient-to-r from-[#203368] via-[#f55e23] to-[#f8b421] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`
-                  )}
-                >
-                  Create Tasks from AI
-                </span>
+                Create Tasks from{" "}
+                <span className=" bg-primary/80 px-2 rounded-md">AI</span>
               </div>
 
               <h3 className="lg:text-2xl text-lg  flex gap-1   ">
-                <DotIcon /> Arc creates task from Goal, Description and
-                Completion date
+                <ArrowBigRightDash /> Arc creates task from Goal, Description
+                and Completion date
               </h3>
 
               <h3 className="lg:text-2xl text-lg  mt-1 flex gap-1  ">
-                <DotIcon /> Tasks are automatically divided and are set to
-                complete before completion date
+                <ArrowBigRightDash /> Tasks are automatically divided and are
+                set to complete before completion date
               </h3>
             </div>
           </motion.h1>

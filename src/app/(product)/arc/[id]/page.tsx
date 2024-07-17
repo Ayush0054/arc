@@ -3,7 +3,7 @@ import ProgressModal from "@/components/arc/progress-modal";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { Pen } from "lucide-react";
+import { NotebookPen, Pen } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { checkTodo, getArcById, unCheckTodo } from "../../../action";
@@ -207,7 +207,7 @@ function Page({ params }: Params) {
                 Edit Tasks
               </Button>
               <Button onClick={handleNotesModal} className="">
-                Add Notes{" "}
+                <NotebookPen />
                 <kbd className=" max-md:hidden  md:flex p-1 m-1  gap-1 items-center">
                   {" "}
                   <svg
@@ -272,7 +272,7 @@ function Page({ params }: Params) {
                 className={` lg:text-lg text-sm  font-medium font-nunito text-gray-50 leading-none ${
                   //@ts-ignore
                   task?.isChecked
-                    ? "line-through text-gray-200"
+                    ? "line-through text-gray-500"
                     : "text-gray-100"
                 } peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
               >
@@ -321,19 +321,11 @@ function Page({ params }: Params) {
           <EditGoal
             getGoalDetail={getGoalDetails}
             arcId={params.id}
-            // name={title}
-            // description={description}
-            // type={type}
-            // completionDate={completionDate}
             setShowEditModal={setShowEditModal}
           />
         )}
         {showNotes && (
-          <NotesModal
-            setShowNotes={setShowNotes}
-            arcid={params.id}
-            // notes={notes}
-          />
+          <NotesModal setShowNotes={setShowNotes} arcid={params.id} />
         )}
         {showCreateTask && (
           <CreateTaskModal
