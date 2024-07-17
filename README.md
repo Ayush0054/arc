@@ -1,3 +1,1 @@
-# Sneak peak
-
-![alt text](image.png)
+# welcome to Arc
